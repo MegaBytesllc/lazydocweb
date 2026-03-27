@@ -839,7 +839,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#090B11] text-white">
+    <div className="relative min-h-screen overflow-x-hidden bg-[#090B11] text-white">
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute left-1/2 top-0 h-[560px] w-[560px] -translate-x-1/2 rounded-full blur-3xl opacity-25" style={{ background: "radial-gradient(circle, rgba(98,122,255,0.42), transparent 62%)" }} />
         <div className="absolute right-0 top-[10%] h-[480px] w-[480px] rounded-full blur-3xl opacity-20" style={{ background: "radial-gradient(circle, rgba(151,94,255,0.35), transparent 60%)" }} />
