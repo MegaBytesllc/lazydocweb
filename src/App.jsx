@@ -207,7 +207,7 @@ function PricingCard() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(91,124,250,0.18),transparent_32%)]" />
       <div className="relative p-8 md:p-10">
         <div className="mb-4 text-xs uppercase tracking-[0.32em] text-slate-500">Pricing</div>
-        <div className="mb-2 text-5xl font-semibold tracking-tight text-white">$29.99</div>
+        <div className="mb-2 text-5xl font-semibold tracking-tight text-white">$39.99</div>
         <div className="mb-6 text-slate-400">One-time purchase</div>
         <div className="mb-8 space-y-3 text-slate-300">
           {[
@@ -338,7 +338,7 @@ function HomePage({ setPage }) {
           <button onClick={() => setPage("compare")} className="hover:text-white">Compare</button>
           <a href="#pricing" className="hover:text-white">Pricing</a>
         </div>
-        <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx">Get LazyDoc — $29.99</PrimaryButton>
+        <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx">Get LazyDoc — $39.99</PrimaryButton>
       </nav>
 
       <section className="grid items-center gap-12 pb-24 pt-2 lg:grid-cols-[1.02fr_1fr] lg:gap-16">
@@ -356,7 +356,7 @@ function HomePage({ setPage }) {
 
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
             <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx">
-              Get LazyDoc — $29.99 <ArrowRight className="ml-2 h-4 w-4" />
+              Get LazyDoc — $39.99 <ArrowRight className="ml-2 h-4 w-4" />
             </PrimaryButton>
             <SecondaryButton onClick={() => setPage("features")}>Explore features</SecondaryButton>
           </div>
@@ -535,7 +535,7 @@ function HomePage({ setPage }) {
               <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-400">You already did the work. Let the documentation take care of itself.</p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row md:flex-col">
-              <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx" className="px-6 py-4">Get LazyDoc — $29.99</PrimaryButton>
+              <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx" className="px-6 py-4">Get LazyDoc — $39.99</PrimaryButton>
               <SecondaryButton onClick={() => setPage("features")} className="px-6 py-4">Explore features</SecondaryButton>
             </div>
           </div>
@@ -582,7 +582,7 @@ function FeaturesPage({ setPage }) {
           <a href="#byok" className="hover:text-white">BYOK</a>
           <button onClick={() => setPage("compare")} className="hover:text-white">Compare</button>
         </div>
-        <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx">Get LazyDoc — $29.99</PrimaryButton>
+        <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx">Get LazyDoc — $39.99</PrimaryButton>
       </nav>
 
       <section className="pb-20 pt-2">
@@ -599,7 +599,7 @@ function FeaturesPage({ setPage }) {
               Capture real workflows, generate usable documentation, export it anywhere, and keep your AI stack under your control.
             </p>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-              <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx">Get LazyDoc — $29.99</PrimaryButton>
+              <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx">Get LazyDoc — $39.99</PrimaryButton>
               <SecondaryButton onClick={() => setPage("home")}>Back to landing page</SecondaryButton>
             </div>
           </div>
@@ -700,11 +700,11 @@ function FeaturesPage({ setPage }) {
           <div className="grid items-center gap-8 md:grid-cols-[1fr_auto]">
             <div>
               <div className="mb-4 text-xs uppercase tracking-[0.32em] text-slate-500">Ready to use it?</div>
-              <h2 className="text-4xl font-semibold tracking-tight text-white md:text-5xl">Everything above is included for $29.99.</h2>
+              <h2 className="text-4xl font-semibold tracking-tight text-white md:text-5xl">Everything above is included for $39.99.</h2>
               <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-400">One-time purchase. Bring your own AI. Keep your own leverage.</p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row md:flex-col">
-              <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx" className="px-6 py-4">Get LazyDoc — $29.99</PrimaryButton>
+              <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx" className="px-6 py-4">Get LazyDoc — $39.99</PrimaryButton>
               <SecondaryButton onClick={() => setPage("home")} className="px-6 py-4">Back to home</SecondaryButton>
             </div>
           </div>
@@ -731,7 +731,7 @@ function ComparePage({ setPage }) {
           <a href="#table" className="hover:text-white">Matrix</a>
           <a href="#verdict" className="hover:text-white">Verdict</a>
         </div>
-        <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx">Get LazyDoc — $29.99</PrimaryButton>
+        <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx">Get LazyDoc — $39.99</PrimaryButton>
       </nav>
 
       <section className="pb-20 pt-2">
@@ -748,7 +748,7 @@ function ComparePage({ setPage }) {
               If you are choosing between Scribe, Tango, and Guidde, the biggest difference is simple: LazyDoc is built for real desktop workflows and lets you bring your own AI instead of renting theirs forever.
             </p>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-              <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx">Get LazyDoc — $29.99</PrimaryButton>
+              <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx">Get LazyDoc — $39.99</PrimaryButton>
               <SecondaryButton onClick={() => setPage("features")}>See feature breakdown</SecondaryButton>
             </div>
           </div>
@@ -810,7 +810,7 @@ function ComparePage({ setPage }) {
               <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-400">Use the tool built for actual workflows, not just polished demos.</p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row md:flex-col">
-              <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx" className="px-6 py-4">Get LazyDoc — $29.99</PrimaryButton>
+              <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx" className="px-6 py-4">Get LazyDoc — $39.99</PrimaryButton>
               <SecondaryButton onClick={() => setPage("home")} className="px-6 py-4">Back to home</SecondaryButton>
             </div>
           </div>
