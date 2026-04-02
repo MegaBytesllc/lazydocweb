@@ -71,9 +71,13 @@ function MacIcon({ large = false }) {
   );
 }
 
-function PrimaryButton({ children, className = "", onClick }) {
+function PrimaryButton({ children, className = "", onClick, href }) {
+  const cls = `inline-flex items-center justify-center rounded-2xl bg-[#5B7CFA] px-5 py-3 font-medium text-white transition hover:bg-[#6B89FA] shadow-[0_10px_30px_rgba(91,124,250,0.28)] ${className}`;
+  if (href) {
+    return <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>{children}</a>;
+  }
   return (
-    <button onClick={onClick} className={`inline-flex items-center justify-center rounded-2xl bg-[#5B7CFA] px-5 py-3 font-medium text-white transition hover:bg-[#6B89FA] shadow-[0_10px_30px_rgba(91,124,250,0.28)] ${className}`}>
+    <button onClick={onClick} className={cls}>
       {children}
     </button>
   );
@@ -219,7 +223,7 @@ function PricingCard() {
             </div>
           ))}
         </div>
-        <PrimaryButton className="w-full py-4">
+        <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx" className="w-full py-4">
           Buy LazyDoc <ChevronRight className="ml-1 h-4 w-4" />
         </PrimaryButton>
         <p className="mt-4 text-sm leading-6 text-slate-500">No subscription. No token markup. Your API usage stays yours.</p>
@@ -334,7 +338,7 @@ function HomePage({ setPage }) {
           <button onClick={() => setPage("compare")} className="hover:text-white">Compare</button>
           <a href="#pricing" className="hover:text-white">Pricing</a>
         </div>
-        <PrimaryButton>Get LazyDoc — $29.99</PrimaryButton>
+        <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx">Get LazyDoc — $29.99</PrimaryButton>
       </nav>
 
       <section className="grid items-center gap-12 pb-24 pt-2 lg:grid-cols-[1.02fr_1fr] lg:gap-16">
@@ -351,7 +355,7 @@ function HomePage({ setPage }) {
           </p>
 
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-            <PrimaryButton>
+            <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx">
               Get LazyDoc — $29.99 <ArrowRight className="ml-2 h-4 w-4" />
             </PrimaryButton>
             <SecondaryButton onClick={() => setPage("features")}>Explore features</SecondaryButton>
@@ -531,7 +535,7 @@ function HomePage({ setPage }) {
               <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-400">You already did the work. Let the documentation take care of itself.</p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row md:flex-col">
-              <PrimaryButton className="px-6 py-4">Get LazyDoc — $29.99</PrimaryButton>
+              <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx" className="px-6 py-4">Get LazyDoc — $29.99</PrimaryButton>
               <SecondaryButton onClick={() => setPage("features")} className="px-6 py-4">Explore features</SecondaryButton>
             </div>
           </div>
@@ -547,10 +551,11 @@ function HomePage({ setPage }) {
               <div>BYOK documentation for devs, IT, and people tired of writing the same guide twice.</div>
             </div>
           </div>
-          <div className="flex gap-6">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
             <button onClick={() => setPage("features")} className="hover:text-white">Features</button>
             <button onClick={() => setPage("compare")} className="hover:text-white">Compare</button>
             <a href="#pricing" className="hover:text-white">Pricing</a>
+            <a href="mailto:Support@megabytesnyc.com" className="hover:text-white">Support@megabytesnyc.com</a>
           </div>
         </div>
       </footer>
@@ -577,7 +582,7 @@ function FeaturesPage({ setPage }) {
           <a href="#byok" className="hover:text-white">BYOK</a>
           <button onClick={() => setPage("compare")} className="hover:text-white">Compare</button>
         </div>
-        <PrimaryButton>Get LazyDoc — $29.99</PrimaryButton>
+        <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx">Get LazyDoc — $29.99</PrimaryButton>
       </nav>
 
       <section className="pb-20 pt-2">
@@ -594,7 +599,7 @@ function FeaturesPage({ setPage }) {
               Capture real workflows, generate usable documentation, export it anywhere, and keep your AI stack under your control.
             </p>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-              <PrimaryButton>Get LazyDoc — $29.99</PrimaryButton>
+              <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx">Get LazyDoc — $29.99</PrimaryButton>
               <SecondaryButton onClick={() => setPage("home")}>Back to landing page</SecondaryButton>
             </div>
           </div>
@@ -699,7 +704,7 @@ function FeaturesPage({ setPage }) {
               <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-400">One-time purchase. Bring your own AI. Keep your own leverage.</p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row md:flex-col">
-              <PrimaryButton className="px-6 py-4">Get LazyDoc — $29.99</PrimaryButton>
+              <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx" className="px-6 py-4">Get LazyDoc — $29.99</PrimaryButton>
               <SecondaryButton onClick={() => setPage("home")} className="px-6 py-4">Back to home</SecondaryButton>
             </div>
           </div>
@@ -726,7 +731,7 @@ function ComparePage({ setPage }) {
           <a href="#table" className="hover:text-white">Matrix</a>
           <a href="#verdict" className="hover:text-white">Verdict</a>
         </div>
-        <PrimaryButton>Get LazyDoc — $29.99</PrimaryButton>
+        <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx">Get LazyDoc — $29.99</PrimaryButton>
       </nav>
 
       <section className="pb-20 pt-2">
@@ -743,7 +748,7 @@ function ComparePage({ setPage }) {
               If you are choosing between Scribe, Tango, and Guidde, the biggest difference is simple: LazyDoc is built for real desktop workflows and lets you bring your own AI instead of renting theirs forever.
             </p>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-              <PrimaryButton>Get LazyDoc — $29.99</PrimaryButton>
+              <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx">Get LazyDoc — $29.99</PrimaryButton>
               <SecondaryButton onClick={() => setPage("features")}>See feature breakdown</SecondaryButton>
             </div>
           </div>
@@ -805,7 +810,7 @@ function ComparePage({ setPage }) {
               <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-400">Use the tool built for actual workflows, not just polished demos.</p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row md:flex-col">
-              <PrimaryButton className="px-6 py-4">Get LazyDoc — $29.99</PrimaryButton>
+              <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx" className="px-6 py-4">Get LazyDoc — $29.99</PrimaryButton>
               <SecondaryButton onClick={() => setPage("home")} className="px-6 py-4">Back to home</SecondaryButton>
             </div>
           </div>
