@@ -232,6 +232,89 @@ function PricingCard() {
   );
 }
 
+const FAQ_ITEMS = [
+  {
+    q: "Do I need an API key to use LazyDoc?",
+    a: "Yes. LazyDoc uses your own AI provider — Anthropic, OpenAI, or a local model via Ollama or LM Studio. This keeps your data private and means you only pay for what you actually use. New Anthropic and OpenAI accounts both come with free credits to get started.",
+  },
+  {
+    q: "How much does the AI cost to run?",
+    a: "A typical guide generation costs a few cents in API usage. LazyDoc adds zero markup — you pay your provider directly at their standard rates.",
+  },
+  {
+    q: "Can I run LazyDoc completely offline?",
+    a: "Yes. Point LazyDoc at a local model running via Ollama or LM Studio and nothing ever leaves your machine. No API key required, no internet needed.",
+  },
+  {
+    q: "Where do my screen recordings go?",
+    a: "Nowhere. Recordings are processed locally on your machine. Only the extracted frames are sent to your chosen AI provider. LazyDoc has no backend and no servers.",
+  },
+  {
+    q: "How is this different from Scribe?",
+    a: "Scribe is a browser extension — it only captures what happens in Chrome. LazyDoc captures your entire screen, including local apps, terminals, admin consoles, dashboards, and anything else outside the browser.",
+  },
+  {
+    q: "How many machines can I install LazyDoc on?",
+    a: "Your one-time license supports up to 3 machine activations. If you need to transfer to a new machine, contact support.",
+  },
+  {
+    q: "Is there a refund policy?",
+    a: "Yes. If LazyDoc doesn't work for you, email support within 30 days of purchase and we'll make it right.",
+  },
+  {
+    q: "Will I get future updates?",
+    a: "Yes. Your one-time purchase includes all future updates delivered automatically through the built-in updater.",
+  },
+];
+
+function FAQItem({ q, a, isOpen, onToggle }) {
+  return (
+    <div className="border-b border-white/8">
+      <button
+        onClick={onToggle}
+        className="flex w-full items-center justify-between gap-6 py-5 text-left text-slate-200 transition hover:text-white"
+      >
+        <span className="text-base font-medium md:text-lg">{q}</span>
+        <span className={`shrink-0 text-slate-400 transition-transform duration-300 ${isOpen ? "rotate-45" : ""}`}>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M10 4v12M4 10h12" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+          </svg>
+        </span>
+      </button>
+      <div
+        className="overflow-hidden transition-all duration-300 ease-in-out"
+        style={{ maxHeight: isOpen ? "400px" : "0px", opacity: isOpen ? 1 : 0 }}
+      >
+        <p className="pb-5 text-base leading-8 text-slate-400">{a}</p>
+      </div>
+    </div>
+  );
+}
+
+function FAQSection() {
+  const [openIndex, setOpenIndex] = React.useState(null);
+  return (
+    <section className="py-16 md:py-20">
+      <SectionTitle
+        eyebrow="F A Q"
+        title="Everything you were about to Google."
+        body="The questions worth answering before you buy."
+      />
+      <div className="mx-auto max-w-3xl rounded-[28px] border border-white/10 bg-white/[0.03] px-6 md:px-10">
+        {FAQ_ITEMS.map((item, i) => (
+          <FAQItem
+            key={i}
+            q={item.q}
+            a={item.a}
+            isOpen={openIndex === i}
+            onToggle={() => setOpenIndex(openIndex === i ? null : i)}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function TestimonialCard({ quote, author, role }) {
   return (
     <Card className="h-full">
@@ -525,6 +608,8 @@ function HomePage({ setPage }) {
           <TestimonialCard quote="The BYOK part sold me. I do not need another SaaS marking up token costs like it’s doing me a favor." author="Jordan K." role="Indie developer" />
         </div>
       </section>
+
+      <FAQSection />
 
       <section className="pb-10">
         <div className="rounded-[36px] border border-[#2B3B6C] bg-gradient-to-r from-[#101726] via-[#0D1220] to-[#101428] p-8 md:p-12">
