@@ -448,7 +448,7 @@ function HomePage({ setPage }) {
           </span>
           <span className="text-slate-600">·</span>
           <span className="inline-flex items-center gap-1.5 rounded-full border border-white/8 bg-white/[0.03] px-3 py-1">
-            <Layers3 className="h-3.5 w-3.5 text-slate-500" /> 4 steps
+            <Layers3 className="h-3.5 w-3.5 text-slate-500" /> 9 sections
           </span>
           <span className="text-slate-600">·</span>
           <span className="inline-flex items-center gap-1.5 rounded-full border border-white/8 bg-white/[0.03] px-3 py-1">
@@ -468,9 +468,14 @@ function HomePage({ setPage }) {
               <nav className="space-y-0.5">
                 {[
                   { num: "01", label: "The Problem", href: "#problem" },
-                  { num: "02", label: "How It Works", href: "#how-it-works" },
-                  { num: "03", label: "What You Get", href: "#pricing" },
-                  { num: "04", label: "FAQ", href: "#faq" },
+                  { num: "02", label: "Core Workflow", href: "#workflow" },
+                  { num: "03", label: "Frame Review", href: "#frames" },
+                  { num: "04", label: "AI Generation", href: "#ai" },
+                  { num: "05", label: "Document Editor", href: "#editor" },
+                  { num: "06", label: "Collections & Vault", href: "#collections" },
+                  { num: "07", label: "Export", href: "#export" },
+                  { num: "08", label: "Pricing", href: "#pricing" },
+                  { num: "09", label: "FAQ", href: "#faq" },
                 ].map(({ num, label, href }) => (
                   <a key={num} href={href} className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm text-slate-400 hover:text-white transition">
                     <span className="font-semibold text-[#5B7CFA]">{num}</span>
@@ -494,6 +499,7 @@ function HomePage({ setPage }) {
         {/* Main content */}
         <main className="min-w-0 pt-2 lg:border-l lg:border-white/6 lg:pl-12">
 
+          {/* 01 The Problem */}
           <DocStep id="problem" number="01" title="Documentation dies the second the work is done.">
             <p className="text-lg leading-8 text-slate-400">
               You finish a task, someone asks for the steps, and now you're manually retracing clicks, taking screenshots, and trying to remember what actually happened instead of what you wish happened.
@@ -516,68 +522,187 @@ function HomePage({ setPage }) {
             </div>
           </DocStep>
 
-          <DocStep id="how-it-works" number="02" title="Record once. LazyDoc handles the rest.">
+          {/* 02 Core Workflow */}
+          <DocStep id="workflow" number="02" title="Core Workflow">
             <p className="text-lg leading-8 text-slate-400">
-              Start a recording, do your work exactly as you normally would, then click Generate. LazyDoc analyzes each frame, writes the steps, captures the screenshots, and exports a clean guide — no cleanup required.
+              Record your screen, a specific window, or a browser tab. LazyDoc captures frames at a configurable interval, then runs them through AI to produce a clean step-by-step guide — automatically.
             </p>
-
-            {/* Step 1: Record */}
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#162447] text-xs font-semibold text-[#9FB6FF]">1</div>
-                <div className="font-semibold text-slate-200">Open LazyDoc and choose your capture source</div>
-              </div>
-              <div className="overflow-hidden rounded-2xl border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
-                <img src="/ss-record.png" alt="LazyDoc record panel showing Screen and Window capture options" className="w-full" />
-              </div>
+            <div className="overflow-hidden rounded-2xl border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+              <img src="/ss-record.png" alt="LazyDoc record panel showing Screen and Window capture options" className="w-full" />
             </div>
-
-            {/* Step 2: Generate */}
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#162447] text-xs font-semibold text-[#9FB6FF]">2</div>
-                <div className="font-semibold text-slate-200">Record your workflow — LazyDoc generates the guide</div>
-              </div>
-              <DocCallout>
-                LazyDoc uses your own AI provider — OpenAI, Anthropic, or a local model. Zero token markup. You pay your provider directly.
-              </DocCallout>
-              <div className="overflow-hidden rounded-2xl border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
-                <img src="/ss-guide.png" alt="LazyDoc showing a generated guide with table of contents and step-by-step output" className="w-full" />
-              </div>
-            </div>
-
-            {/* Step 3: Edit & Export */}
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#162447] text-xs font-semibold text-[#9FB6FF]">3</div>
-                <div className="font-semibold text-slate-200">Edit in the built-in editor, then export anywhere</div>
-              </div>
-              <div className="overflow-hidden rounded-2xl border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
-                <img src="/ss-editor.png" alt="LazyDoc editor showing markdown source and live preview side by side" className="w-full" />
-              </div>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {[
+                { icon: <Monitor className="h-4 w-4" />, t: "Screen, window, or tab", b: "Choose your capture source — full screen or a single app window." },
+                { icon: <Zap className="h-4 w-4" />, t: "Global hotkey", b: "Cmd+Shift+R starts and stops recording from any app, no switching required." },
+                { icon: <ScanText className="h-4 w-4" />, t: "Configurable frame interval", b: "Set how often LazyDoc captures and how many frames to keep." },
+                { icon: <Workflow className="h-4 w-4" />, t: "AI-powered guide generation", b: "Click Generate and LazyDoc analyzes every frame to write your steps." },
+              ].map(({ icon, t, b }) => (
+                <div key={t} className="flex gap-3 rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+                  <div className="mt-0.5 shrink-0 text-slate-400">{icon}</div>
+                  <div>
+                    <div className="text-sm font-medium text-slate-200">{t}</div>
+                    <div className="mt-0.5 text-xs leading-5 text-slate-500">{b}</div>
+                  </div>
+                </div>
+              ))}
             </div>
           </DocStep>
 
-          <DocStep id="pricing" number="03" title="Everything included. One price.">
+          {/* 03 Frame Review */}
+          <DocStep id="frames" number="03" title="Frame Review">
             <p className="text-lg leading-8 text-slate-400">
-              No subscription tiers. No seat limits. No hidden costs waiting inside a usage dashboard. One purchase, full access, every future update included.
+              Before AI processing, you're in control. Review every captured frame, cut the noise, reorder steps, and add context so the AI has exactly what it needs to write accurate documentation.
+            </p>
+            <DocCallout>
+              Adding per-frame context notes is one of the highest-leverage things you can do — a single sentence tells the AI what a screenshot means, cutting out ambiguity entirely.
+            </DocCallout>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {[
+                { icon: <Layers3 className="h-4 w-4" />, t: "Drag-and-drop reordering", b: "Rearrange frames into the exact order you want before generating." },
+                { icon: <Check className="h-4 w-4" />, t: "Include / exclude frames", b: "One click to remove frames that add noise or repeat content." },
+                { icon: <Camera className="h-4 w-4" />, t: "Hover to preview, click to pin", b: "Full-size preview on hover so you know exactly what each frame shows." },
+                { icon: <BadgeCheck className="h-4 w-4" />, t: "Set a cover image", b: "Pick any frame as the cover for your exported guide." },
+                { icon: <MessageSquareText className="h-4 w-4" />, t: "Per-frame context notes", b: "Add a note to any frame — sent to the AI for more accurate step output." },
+                { icon: <FileText className="h-4 w-4" />, t: "Frame-to-step mapping", b: "Each frame maps to a step, so your guide reflects what actually happened." },
+              ].map(({ icon, t, b }) => (
+                <div key={t} className="flex gap-3 rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+                  <div className="mt-0.5 shrink-0 text-slate-400">{icon}</div>
+                  <div>
+                    <div className="text-sm font-medium text-slate-200">{t}</div>
+                    <div className="mt-0.5 text-xs leading-5 text-slate-500">{b}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </DocStep>
+
+          {/* 04 AI Generation */}
+          <DocStep id="ai" number="04" title="AI Generation">
+            <p className="text-lg leading-8 text-slate-400">
+              LazyDoc supports multiple AI providers out of the box. Bring your Anthropic or OpenAI key, point it at a local Ollama model, or connect any OpenAI-compatible endpoint. Zero markup — your API spend goes directly to your provider.
             </p>
             <div className="grid gap-6 md:grid-cols-[1fr_1fr] items-start">
               <DocCallout variant="warning">
-                BYOK means you bring your own API key — LazyDoc adds zero markup. Your AI spend goes directly to your provider at their standard rates.
+                BYOK means you bring your own API key. LazyDoc adds zero markup. A typical guide costs a few cents.
               </DocCallout>
               <div className="overflow-hidden rounded-2xl border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
                 <img src="/ss-settings.png" alt="LazyDoc AI backend settings showing Anthropic, OpenAI, and local Ollama options" className="w-full" />
               </div>
             </div>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {[
+                { icon: <Cpu className="h-4 w-4" />, t: "Anthropic (Claude)", b: "Best quality. Requires API key. ~$0.07/guide." },
+                { icon: <Globe className="h-4 w-4" />, t: "OpenAI / compatible endpoints", b: "ChatGPT API, vLLM, LM Studio, LocalAI, Oobabooga." },
+                { icon: <Lock className="h-4 w-4" />, t: "Local AI via Ollama", b: "Free. Private. Runs entirely on your machine — no internet required." },
+                { icon: <Zap className="h-4 w-4" />, t: "Diff-aware re-generation", b: "Unchanged frames are cached and skipped — saves time and API cost." },
+                { icon: <Wand2 className="h-4 w-4" />, t: "Custom prompt templates", b: "Standard, SOP Mode, Customer-Facing, and user-created templates." },
+                { icon: <ScanText className="h-4 w-4" />, t: "Output modifiers", b: "Generalize, Preserve Exact, Formal Style — applied per generation." },
+              ].map(({ icon, t, b }) => (
+                <div key={t} className="flex gap-3 rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+                  <div className="mt-0.5 shrink-0 text-slate-400">{icon}</div>
+                  <div>
+                    <div className="text-sm font-medium text-slate-200">{t}</div>
+                    <div className="mt-0.5 text-xs leading-5 text-slate-500">{b}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </DocStep>
+
+          {/* 05 Document Editor */}
+          <DocStep id="editor" number="05" title="Document Editor">
+            <p className="text-lg leading-8 text-slate-400">
+              Every generated guide opens in a full editor — inline editing, step management, a markdown view with live preview, and a table of contents with smooth scroll. Edit titles, descriptions, tips, code snippets, and steps without leaving the app.
+            </p>
+            <div className="overflow-hidden rounded-2xl border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+              <img src="/ss-editor.png" alt="LazyDoc editor showing markdown source and live preview side by side" className="w-full" />
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {[
+                { icon: <FileText className="h-4 w-4" />, t: "Inline editing", b: "Edit titles, descriptions, tips, and code snippets directly in the guide view." },
+                { icon: <Layers3 className="h-4 w-4" />, t: "Add, remove, reorder steps", b: "Full control over step order. Add manual steps anywhere in the guide." },
+                { icon: <Camera className="h-4 w-4" />, t: "Frame management per step", b: "Add frames from your session to any step, remove or swap them individually." },
+                { icon: <Terminal className="h-4 w-4" />, t: "Full markdown editor", b: "Markdown source with live preview and a formatting toolbar — for when you want full control." },
+                { icon: <MessageSquareText className="h-4 w-4" />, t: "Tips and code blocks", b: "Tip and code snippet blocks per step for richer, more useful guides." },
+                { icon: <Wand2 className="h-4 w-4" />, t: "AI step rewrite", b: "Rewrite any individual step with a custom instruction — no need to regenerate the whole guide." },
+              ].map(({ icon, t, b }) => (
+                <div key={t} className="flex gap-3 rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+                  <div className="mt-0.5 shrink-0 text-slate-400">{icon}</div>
+                  <div>
+                    <div className="text-sm font-medium text-slate-200">{t}</div>
+                    <div className="mt-0.5 text-xs leading-5 text-slate-500">{b}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </DocStep>
+
+          {/* 06 Collections & Vault */}
+          <DocStep id="collections" number="06" title="Collections & Vault">
+            <p className="text-lg leading-8 text-slate-400">
+              Every guide you generate is automatically saved. Pull up any past guide, open it as a side-by-side reference, or connect your Obsidian vault to browse and search your markdown notes without leaving LazyDoc.
+            </p>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {[
+                { icon: <BookOpen className="h-4 w-4" />, t: "Auto-saves last 10 guides", b: "Thumbnail previews, date, step count, and software badge per entry." },
+                { icon: <Layers3 className="h-4 w-4" />, t: "Open past guides", b: "Load any previous guide or open it as a side-by-side reference panel." },
+                { icon: <FolderOutput className="h-4 w-4" />, t: "Obsidian Vault integration", b: "Connect your vault folder and browse all your markdown notes from the sidebar." },
+                { icon: <ScanText className="h-4 w-4" />, t: "Vault search", b: "Search across all your notes and open any as a read-only reference panel." },
+                { icon: <FileText className="h-4 w-4" />, t: "Slide-in reference drawer", b: "View any collection doc or vault note while editing — no context switching." },
+                { icon: <AppWindow className="h-4 w-4" />, t: "Open from anywhere", b: "Access the reference panel from collections, vault, or directly inside the editor." },
+              ].map(({ icon, t, b }) => (
+                <div key={t} className="flex gap-3 rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+                  <div className="mt-0.5 shrink-0 text-slate-400">{icon}</div>
+                  <div>
+                    <div className="text-sm font-medium text-slate-200">{t}</div>
+                    <div className="mt-0.5 text-xs leading-5 text-slate-500">{b}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </DocStep>
+
+          {/* 07 Export */}
+          <DocStep id="export" number="07" title="Export">
+            <p className="text-lg leading-8 text-slate-400">
+              Ship your guide in the format your team actually uses. PDF, Markdown, Word, a full folder with images, or an HTML file with Open Graph meta tags — all from one button.
+            </p>
+            <div className="overflow-hidden rounded-2xl border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+              <img src="/ss-guide.png" alt="LazyDoc generated guide with export button" className="w-full" />
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {[
+                { icon: <FileText className="h-4 w-4" />, t: "PDF export", b: "Print-optimized layout — ready to share or attach to a ticket." },
+                { icon: <Terminal className="h-4 w-4" />, t: "Markdown export", b: "Clean .md file that works in Notion, Obsidian, GitHub, or any docs tool." },
+                { icon: <Download className="h-4 w-4" />, t: "DOCX export", b: "Word-compatible for teams that live in Microsoft Office." },
+                { icon: <FolderOutput className="h-4 w-4" />, t: "Folder export", b: "Markdown file + images as separate files — portable and version-control friendly." },
+                { icon: <Globe className="h-4 w-4" />, t: "HTML export", b: "Self-contained HTML with cover image and Open Graph meta tags." },
+                { icon: <Zap className="h-4 w-4" />, t: "Auto-save to output folder", b: "Set a default output folder — no dialog every time you export." },
+              ].map(({ icon, t, b }) => (
+                <div key={t} className="flex gap-3 rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+                  <div className="mt-0.5 shrink-0 text-slate-400">{icon}</div>
+                  <div>
+                    <div className="text-sm font-medium text-slate-200">{t}</div>
+                    <div className="mt-0.5 text-xs leading-5 text-slate-500">{b}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </DocStep>
+
+          {/* 08 Pricing */}
+          <DocStep id="pricing" number="08" title="Everything included. One price.">
+            <p className="text-lg leading-8 text-slate-400">
+              No subscription tiers. No seat limits. No hidden costs waiting inside a usage dashboard. One purchase, full access, every future update included automatically.
+            </p>
             <div className="grid gap-6 md:grid-cols-[1fr_1fr]">
               <PricingCard />
               <div className="grid content-start gap-3">
                 {[
-                  { icon: <Lock className="h-4 w-4" />, t: "Keys stored locally", b: "API credentials stay on your machine. No SaaS backend ever sees them." },
-                  { icon: <Cpu className="h-4 w-4" />, t: "Works with your stack", b: "OpenAI, Anthropic, Ollama, LM Studio — swap any time." },
-                  { icon: <Shield className="h-4 w-4" />, t: "Portable outputs", b: "Markdown and PDF exports that live outside the tool forever." },
-                  { icon: <Zap className="h-4 w-4" />, t: "Desktop-first, macOS native", b: "Captures anything on screen — not just what's in a browser tab." },
+                  { icon: <Lock className="h-4 w-4" />, t: "Keys stored locally", b: "API credentials stay on your machine with OS-level encryption. No SaaS backend ever sees them." },
+                  { icon: <Shield className="h-4 w-4" />, t: "Up to 3 machine activations", b: "Your license works on up to 3 machines. Transfer to a new machine by contacting support." },
+                  { icon: <BadgeCheck className="h-4 w-4" />, t: "7-day offline grace period", b: "LazyDoc works fully offline for 7 days before license re-validation is required." },
+                  { icon: <Zap className="h-4 w-4" />, t: "Future updates included", b: "All updates delivered automatically through the built-in updater. No re-purchase." },
                 ].map(({ icon, t, b }) => (
                   <div key={t} className="flex gap-3 rounded-2xl border border-white/8 bg-white/[0.03] p-4">
                     <div className="mt-0.5 shrink-0 text-slate-400">{icon}</div>
@@ -591,7 +716,8 @@ function HomePage({ setPage }) {
             </div>
           </DocStep>
 
-          <DocStep id="faq" number="04" title="Everything you were about to Google.">
+          {/* 09 FAQ */}
+          <DocStep id="faq" number="09" title="Everything you were about to Google.">
             <p className="text-lg leading-8 text-slate-400">
               The questions worth answering before you buy.
             </p>
