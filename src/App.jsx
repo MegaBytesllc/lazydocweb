@@ -448,7 +448,7 @@ function HomePage({ setPage }) {
           </span>
           <span className="text-slate-600">·</span>
           <span className="inline-flex items-center gap-1.5 rounded-full border border-white/8 bg-white/[0.03] px-3 py-1">
-            <Layers3 className="h-3.5 w-3.5 text-slate-500" /> 9 sections
+            <Layers3 className="h-3.5 w-3.5 text-slate-500" /> 11 sections
           </span>
           <span className="text-slate-600">·</span>
           <span className="inline-flex items-center gap-1.5 rounded-full border border-white/8 bg-white/[0.03] px-3 py-1">
@@ -475,7 +475,9 @@ function HomePage({ setPage }) {
                   { num: "06", label: "Collections & Vault", href: "#collections" },
                   { num: "07", label: "Export", href: "#export" },
                   { num: "08", label: "Pricing", href: "#pricing" },
-                  { num: "09", label: "FAQ", href: "#faq" },
+                  { num: "09", label: "Customization", href: "#customization" },
+                  { num: "10", label: "Security & Licensing", href: "#security" },
+                  { num: "11", label: "FAQ", href: "#faq" },
                 ].map(({ num, label, href }) => (
                   <a key={num} href={href} className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm text-slate-400 hover:text-white transition">
                     <span className="font-semibold text-[#5B7CFA]">{num}</span>
@@ -717,7 +719,57 @@ function HomePage({ setPage }) {
           </DocStep>
 
           {/* 09 FAQ */}
-          <DocStep id="faq" number="09" title="Everything you were about to Google.">
+          {/* 09 Customization */}
+          <DocStep id="customization" number="09" title="Customization">
+            <p className="text-lg leading-8 text-slate-400">
+              LazyDoc adapts to how you work — not the other way around. Swap themes, tune the system prompt to match your team's documentation style, run it as a menu bar app, and configure capture settings to match your workflow pace.
+            </p>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {[
+                { icon: <Sparkles className="h-4 w-4" />, t: "Multiple themes", b: "Switch between built-in themes to match your environment and preference." },
+                { icon: <Terminal className="h-4 w-4" />, t: "System prompt editor", b: "Fully customize how the AI writes documentation — tone, format, structure, all of it." },
+                { icon: <ScanText className="h-4 w-4" />, t: "Configurable frame settings", b: "Set the capture interval and max frame count to match your workflow pace." },
+                { icon: <AppWindow className="h-4 w-4" />, t: "Menu bar mode", b: "Runs as a tray app and hides from the Dock — stays out of your way until you need it." },
+              ].map(({ icon, t, b }) => (
+                <div key={t} className="flex gap-3 rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+                  <div className="mt-0.5 shrink-0 text-slate-400">{icon}</div>
+                  <div>
+                    <div className="text-sm font-medium text-slate-200">{t}</div>
+                    <div className="mt-0.5 text-xs leading-5 text-slate-500">{b}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </DocStep>
+
+          {/* 10 Security & Licensing */}
+          <DocStep id="security" number="10" title="Security & Licensing">
+            <p className="text-lg leading-8 text-slate-400">
+              Your API keys never leave your machine. Your recordings never touch a LazyDoc server. Licensing is handled at purchase — no account required, with a 7-day offline grace period so you're never blocked.
+            </p>
+            <DocCallout>
+              LazyDoc has no backend. Keys are stored with OS-level encryption and only sent directly to your configured AI provider — nobody else sees them.
+            </DocCallout>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {[
+                { icon: <Lock className="h-4 w-4" />, t: "Keys stored encrypted on-device", b: "API credentials are encrypted at the OS level and never sent anywhere except your configured provider." },
+                { icon: <Shield className="h-4 w-4" />, t: "No LazyDoc backend", b: "Recordings are processed locally. No server ever sees your screen data or your keys." },
+                { icon: <BadgeCheck className="h-4 w-4" />, t: "License via Gumroad", b: "Activate with your purchase — no account creation, no email subscription required." },
+                { icon: <Zap className="h-4 w-4" />, t: "7-day offline grace period", b: "LazyDoc works fully offline for 7 days before license re-validation is required." },
+              ].map(({ icon, t, b }) => (
+                <div key={t} className="flex gap-3 rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+                  <div className="mt-0.5 shrink-0 text-slate-400">{icon}</div>
+                  <div>
+                    <div className="text-sm font-medium text-slate-200">{t}</div>
+                    <div className="mt-0.5 text-xs leading-5 text-slate-500">{b}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </DocStep>
+
+          {/* 11 FAQ */}
+          <DocStep id="faq" number="11" title="Everything you were about to Google.">
             <p className="text-lg leading-8 text-slate-400">
               The questions worth answering before you buy.
             </p>
