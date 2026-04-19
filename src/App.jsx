@@ -555,6 +555,9 @@ function HomePage({ setPage }) {
             <p className="text-lg leading-8 text-slate-400">
               Before AI processing, you're in control. Review every captured frame, cut the noise, reorder steps, and add context so the AI has exactly what it needs to write accurate documentation.
             </p>
+            <div className="overflow-hidden rounded-2xl border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+              <img src="/frameselection.png" alt="LazyDoc frame review panel showing captured frame grid with select and deselect controls" className="w-full" />
+            </div>
             <DocCallout>
               Adding per-frame context notes is one of the highest-leverage things you can do — a single sentence tells the AI what a screenshot means, cutting out ambiguity entirely.
             </DocCallout>
@@ -670,7 +673,7 @@ function HomePage({ setPage }) {
               Ship your guide in the format your team actually uses. PDF, Markdown, Word, a full folder with images, or an HTML file with Open Graph meta tags — all from one button.
             </p>
             <div className="overflow-hidden rounded-2xl border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
-              <img src="/ss-guide.png" alt="LazyDoc generated guide with export button" className="w-full" />
+              <img src="/exportscreen.png" alt="LazyDoc generated guide with export dropdown showing Markdown, PDF, HTML, DOCX options" className="w-full" />
             </div>
             <div className="grid gap-3 sm:grid-cols-2">
               {[
@@ -724,6 +727,14 @@ function HomePage({ setPage }) {
             <p className="text-lg leading-8 text-slate-400">
               LazyDoc adapts to how you work — not the other way around. Swap themes, tune the system prompt to match your team's documentation style, run it as a menu bar app, and configure capture settings to match your workflow pace.
             </p>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="overflow-hidden rounded-2xl border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+                <img src="/ThemeSeleection.png" alt="LazyDoc theme picker showing Obsidian, Terminal, Rose, Midnight, Paper presets with custom color controls" className="w-full" />
+              </div>
+              <div className="overflow-hidden rounded-2xl border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+                <img src="/Prompt Editor.png" alt="LazyDoc General settings showing system prompt editor and menu bar mode toggle" className="w-full" />
+              </div>
+            </div>
             <div className="grid gap-3 sm:grid-cols-2">
               {[
                 { icon: <Sparkles className="h-4 w-4" />, t: "Multiple themes", b: "Switch between built-in themes to match your environment and preference." },
