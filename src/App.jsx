@@ -291,26 +291,26 @@ function FAQItem({ q, a, isOpen, onToggle }) {
   );
 }
 
-function FAQSection() {
+function FAQSection({ inline = false }) {
   const [openIndex, setOpenIndex] = React.useState(null);
+  const list = (
+    <div className="rounded-[28px] border border-white/10 bg-white/[0.03] px-6 md:px-10">
+      {FAQ_ITEMS.map((item, i) => (
+        <FAQItem
+          key={i}
+          q={item.q}
+          a={item.a}
+          isOpen={openIndex === i}
+          onToggle={() => setOpenIndex(openIndex === i ? null : i)}
+        />
+      ))}
+    </div>
+  );
+  if (inline) return list;
   return (
     <section className="py-16 md:py-20">
-      <SectionTitle
-        eyebrow="F A Q"
-        title="Everything you were about to Google."
-        body="The questions worth answering before you buy."
-      />
-      <div className="mx-auto max-w-3xl rounded-[28px] border border-white/10 bg-white/[0.03] px-6 md:px-10">
-        {FAQ_ITEMS.map((item, i) => (
-          <FAQItem
-            key={i}
-            q={item.q}
-            a={item.a}
-            isOpen={openIndex === i}
-            onToggle={() => setOpenIndex(openIndex === i ? null : i)}
-          />
-        ))}
-      </div>
+      <SectionTitle eyebrow="F A Q" title="Everything you were about to Google." body="The questions worth answering before you buy." />
+      {list}
     </section>
   );
 }
@@ -404,10 +404,35 @@ function MockAppPanel() {
   );
 }
 
+function DocCallout({ children, variant = "tip" }) {
+  return (
+    <div className={`flex gap-3 rounded-2xl border px-5 py-4 ${
+      variant === "warning"
+        ? "border-amber-800/40 bg-amber-950/20 text-amber-300"
+        : "border-[#1E3A6E] bg-[#0D1828] text-blue-300"
+    }`}>
+      <span className="mt-0.5 shrink-0 text-base">{variant === "warning" ? "⚡" : "💡"}</span>
+      <p className="text-sm leading-7">{children}</p>
+    </div>
+  );
+}
+
+function DocStep({ id, number, title, children }) {
+  return (
+    <section id={id} className="border-b border-white/6 py-12 md:py-14">
+      <div className="mb-7 flex items-start gap-4">
+        <span className="shrink-0 select-none text-7xl font-black leading-none text-white/[0.06] md:text-8xl">{number}</span>
+        <h2 className="mt-3 text-2xl font-bold tracking-tight text-white md:text-3xl">{title}</h2>
+      </div>
+      <div className="space-y-6">{children}</div>
+    </section>
+  );
+}
+
 function HomePage({ setPage }) {
   return (
     <>
-      <nav className="mb-16 flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 backdrop-blur-md">
+      <nav className="mb-10 flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 backdrop-blur-md">
         <div className="flex items-center gap-3">
           <MacIcon />
           <div>
@@ -416,7 +441,7 @@ function HomePage({ setPage }) {
           </div>
         </div>
         <div className="hidden items-center gap-8 text-sm text-slate-400 md:flex">
-          <a href="#problem" className="hover:text-white">Problem</a>
+          <a href="#how-it-works" className="hover:text-white">How It Works</a>
           <button onClick={() => setPage("features")} className="hover:text-white">Features</button>
           <button onClick={() => setPage("compare")} className="hover:text-white">Compare</button>
           <a href="#pricing" className="hover:text-white">Pricing</a>
@@ -424,208 +449,167 @@ function HomePage({ setPage }) {
         <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx">Get LazyDoc — $39.99</PrimaryButton>
       </nav>
 
-      <section className="grid items-center gap-12 pb-24 pt-2 lg:grid-cols-[1.02fr_1fr] lg:gap-16">
-        <div>
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#2A3B69] bg-[#10182A] px-4 py-2 text-sm text-slate-300">
-            <KeyRound className="h-4 w-4 text-[#85A6FF]" />
-            Bring your own API key. Keep control.
-          </div>
-          <h1 className="max-w-4xl text-5xl font-semibold tracking-tight text-white md:text-7xl md:leading-[1.02]">
-            Stop writing docs. <span className="bg-gradient-to-r from-[#7EA0FF] via-[#90A2FF] to-[#B88BFF] bg-clip-text text-transparent">Record once.</span>
-          </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-400 md:text-xl">
-            Capture your workflow, run it through your own AI, and generate clean step-by-step documentation without subscriptions, token markup, or post-task cleanup hell.
-          </p>
-
-          <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-            <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx">
-              Get LazyDoc — $39.99 <ArrowRight className="ml-2 h-4 w-4" />
-            </PrimaryButton>
-            <SecondaryButton onClick={() => setPage("features")}>Explore features</SecondaryButton>
-          </div>
-
-          <div className="mt-10 grid gap-3 sm:grid-cols-3">
-            <Stat value="BYOK" label="Use OpenAI, Anthropic, or local models" />
-            <Stat value="0%" label="Token markup added by LazyDoc" />
-            <Stat value="1x" label="One-time price, not a monthly tax" />
-          </div>
+      {/* Document Header */}
+      <div className="border-b border-white/8 pb-8 mb-0">
+        <h1 className="mb-5 text-5xl font-black tracking-tight text-white md:text-6xl lg:text-7xl leading-[1.04]">
+          Stop writing docs.<br />
+          <span className="bg-gradient-to-r from-[#7EA0FF] via-[#90A2FF] to-[#B88BFF] bg-clip-text text-transparent">Record once.</span>
+        </h1>
+        <div className="flex flex-wrap items-center gap-2 text-sm text-slate-400">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-slate-300">
+            <MacIcon className="h-4 w-4" /> LazyDoc
+          </span>
+          <span className="text-slate-600">·</span>
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-white/8 bg-white/[0.03] px-3 py-1">
+            <Download className="h-3.5 w-3.5 text-slate-500" /> macOS
+          </span>
+          <span className="text-slate-600">·</span>
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-white/8 bg-white/[0.03] px-3 py-1">
+            <Layers3 className="h-3.5 w-3.5 text-slate-500" /> 4 steps
+          </span>
+          <span className="text-slate-600">·</span>
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-white/8 bg-white/[0.03] px-3 py-1">
+            <CircleDollarSign className="h-3.5 w-3.5 text-slate-500" /> One-time $39.99
+          </span>
         </div>
+      </div>
 
-        <MockAppPanel />
-      </section>
+      {/* Two-column document layout */}
+      <div className="grid gap-0 lg:grid-cols-[260px_1fr]">
 
-      <section id="problem" className="pb-24">
-        <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
-          <SectionTitle
-            eyebrow="The problem"
-            title="Documentation dies the second the work is done."
-            body="You finish a task, someone asks for the steps, and now you are manually retracing clicks, taking screenshots, and trying to remember what actually happened instead of what you wish happened."
-            align="left"
-          />
-          <Card className="relative overflow-hidden bg-[#0D111B]">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(164,92,247,0.18),transparent_32%)]" />
-            <div className="relative grid gap-4 p-6 md:grid-cols-2 md:p-8">
+        {/* Sidebar */}
+        <aside className="hidden lg:block">
+          <div className="sticky top-8 pr-10 pt-10 space-y-6">
+            <div>
+              <div className="mb-3 text-xs font-semibold uppercase tracking-[0.28em] text-[#5B7CFA]">Contents</div>
+              <nav className="space-y-0.5">
+                {[
+                  { num: "01", label: "The Problem", href: "#problem" },
+                  { num: "02", label: "How It Works", href: "#how-it-works" },
+                  { num: "03", label: "What You Get", href: "#pricing" },
+                  { num: "04", label: "FAQ", href: "#faq" },
+                ].map(({ num, label, href }) => (
+                  <a key={num} href={href} className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm text-slate-400 hover:text-white transition">
+                    <span className="font-semibold text-[#5B7CFA]">{num}</span>
+                    <span>{label}</span>
+                  </a>
+                ))}
+              </nav>
+            </div>
+            <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-5 text-sm leading-7 text-slate-400">
+              A desktop app that captures real workflows and turns them into clean documentation. No subscriptions. No AI markup. Your key, your data.
+            </div>
+            <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx" className="w-full justify-center">
+              Get LazyDoc — $39.99
+            </PrimaryButton>
+            <SecondaryButton onClick={() => setPage("features")} className="w-full justify-center">
+              Explore features
+            </SecondaryButton>
+          </div>
+        </aside>
+
+        {/* Main content */}
+        <main className="min-w-0 pt-2 lg:border-l lg:border-white/6 lg:pl-12">
+
+          <DocStep id="problem" number="01" title="Documentation dies the second the work is done.">
+            <p className="text-lg leading-8 text-slate-400">
+              You finish a task, someone asks for the steps, and now you're manually retracing clicks, taking screenshots, and trying to remember what actually happened instead of what you wish happened.
+            </p>
+            <DocCallout>
+              Every time you need to write the same guide twice, that's time LazyDoc gives back.
+            </DocCallout>
+            <div className="grid gap-4 sm:grid-cols-3">
               {[
-                ["Retrace steps from memory", "What actually happened gets replaced by a polite fiction."],
-                ["Take screenshots manually", "Nobody enjoys playing documentation paparazzi."],
-                ["Rewrite the same guide twice", "Once for yourself, once for everyone else."],
-                ["Lose the details", "Then the next person starts from zero anyway."],
-              ].map(([title, text]) => (
-                <div key={title} className="rounded-2xl border border-white/8 bg-white/[0.03] p-5">
-                  <div className="mb-2 text-lg font-medium text-white">{title}</div>
-                  <div className="text-slate-500 leading-7">{text}</div>
+                { icon: <BookOpen className="h-4 w-4" />, label: "Retrace steps from memory", sub: "What actually happened gets replaced by a polite fiction." },
+                { icon: <Camera className="h-4 w-4" />, label: "Take screenshots manually", sub: "Nobody enjoys playing documentation paparazzi." },
+                { icon: <FolderOutput className="h-4 w-4" />, label: "Rewrite the same guide twice", sub: "Once for yourself, once for everyone else." },
+              ].map(({ icon, label, sub }) => (
+                <div key={label} className="rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+                  <div className="mb-2 inline-flex rounded-xl border border-white/10 bg-white/5 p-2 text-slate-400">{icon}</div>
+                  <div className="text-sm font-medium text-slate-200">{label}</div>
+                  <div className="mt-1 text-xs leading-5 text-slate-500">{sub}</div>
                 </div>
               ))}
             </div>
-          </Card>
-        </div>
-      </section>
+          </DocStep>
 
-      <section className="pb-24">
-        <div className="grid gap-6 lg:grid-cols-[1fr_1fr]">
-          <Card className="relative overflow-hidden border-[#24325F] bg-[#0E1423] p-8 md:p-10">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(91,124,250,0.16),transparent_34%)]" />
-            <div className="relative">
-              <div className="mb-4 inline-flex rounded-full border border-white/8 bg-white/[0.04] px-4 py-2 text-xs uppercase tracking-[0.28em] text-slate-500">The fix</div>
-              <h2 className="mb-4 text-4xl font-semibold tracking-tight text-white">If you did the work, the doc should already exist.</h2>
-              <p className="max-w-xl text-lg leading-8 text-slate-400">LazyDoc captures the workflow while it is happening, then turns it into something your team can actually use.</p>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <div className="rounded-2xl border border-white/8 bg-white/[0.04] px-4 py-3 text-slate-200">Structured steps</div>
-                <div className="rounded-2xl border border-white/8 bg-white/[0.04] px-4 py-3 text-slate-200">Screenshots</div>
-                <div className="rounded-2xl border border-white/8 bg-white/[0.04] px-4 py-3 text-slate-200">Readable output</div>
-              </div>
+          <DocStep id="how-it-works" number="02" title="Record once. LazyDoc handles the rest.">
+            <p className="text-lg leading-8 text-slate-400">
+              Start a recording, do your work exactly as you normally would, then click Generate. LazyDoc analyzes each frame, writes the steps, captures the screenshots, and exports a clean guide — no cleanup required.
+            </p>
+            <DocCallout>
+              LazyDoc uses your own AI provider — OpenAI, Anthropic, or a local model. Zero token markup. You pay your provider directly.
+            </DocCallout>
+            <MockAppPanel />
+            <div className="grid gap-4 sm:grid-cols-3">
+              {[
+                { n: "1", label: "Record", sub: "Capture your full screen or a single app window while you work." },
+                { n: "2", label: "Generate", sub: "Run it through your own AI. LazyDoc analyzes each frame and writes the steps." },
+                { n: "3", label: "Export", sub: "Ship as Markdown, PDF, or polished internal content." },
+              ].map(({ n, label, sub }) => (
+                <div key={n} className="rounded-2xl border border-white/8 bg-white/[0.03] p-5">
+                  <div className="mb-3 flex h-8 w-8 items-center justify-center rounded-full bg-[#162447] text-sm font-semibold text-[#9FB6FF]">{n}</div>
+                  <div className="font-semibold text-slate-200">{label}</div>
+                  <div className="mt-1 text-sm leading-6 text-slate-500">{sub}</div>
+                </div>
+              ))}
             </div>
-          </Card>
-          <Card className="relative overflow-hidden border-[#24325F] bg-[#0A0F19] p-8 md:p-10">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,rgba(164,92,247,0.14),transparent_34%)]" />
-            <div className="relative grid gap-4 sm:grid-cols-3">
-              <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-5">
-                <Workflow className="mb-3 h-5 w-5 text-[#9FB6FF]" />
-                <div className="mb-1 font-medium text-white">Record</div>
-                <div className="text-sm leading-6 text-slate-500">Capture your actual workflow.</div>
-              </div>
-              <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-5">
-                <Zap className="mb-3 h-5 w-5 text-[#9FB6FF]" />
-                <div className="mb-1 font-medium text-white">Generate</div>
-                <div className="text-sm leading-6 text-slate-500">Run it through your configured model.</div>
-              </div>
-              <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-5">
-                <Download className="mb-3 h-5 w-5 text-[#9FB6FF]" />
-                <div className="mb-1 font-medium text-white">Ship</div>
-                <div className="text-sm leading-6 text-slate-500">Export docs people can follow.</div>
-              </div>
-            </div>
-          </Card>
-        </div>
-      </section>
+          </DocStep>
 
-      <section id="features" className="pb-24">
-        <SectionTitle eyebrow="Why LazyDoc" title="Built for people who actually do the work." body="Not for teams that live in polished browser demos. For developers, IT, infrastructure, support, and anyone tired of writing the same guide after the fact." />
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          <FeatureCard icon={<Monitor className="h-5 w-5" />} title="Record screen or window" text="Capture the exact workflow without stopping every two seconds to explain what you clicked." />
-          <FeatureCard icon={<Sparkles className="h-5 w-5" />} title="Generate clean guides" text="Get step-by-step output with screenshots, titles, and readable structure instead of a wall of chaos." />
-          <FeatureCard icon={<Download className="h-5 w-5" />} title="Export developer-friendly" text="Ship guides as Markdown, polished docs, PDFs, or internal wiki content without rebuilding everything by hand." />
-          <FeatureCard icon={<Cpu className="h-5 w-5" />} title="Bring your own model" text="Use OpenAI, Anthropic, or your local LLM. Your stack, your billing, your rules." />
-        </div>
-      </section>
-
-      <section id="compare" className="pb-24">
-        <SectionTitle eyebrow="Comparison" title="Scribe is for browsers. LazyDoc is for real workflows." body="If your work touches local apps, terminals, dashboards, admin consoles, or anything outside Chrome, you need a different class of tool." />
-        <Card className="overflow-hidden border-[#24325F] bg-[#0C111B]">
-          <ComparisonRow label="Feature" lazydoc="LazyDoc" other="Scribe" header />
-          <ComparisonRow label="AI-powered docs" lazydoc="Full generation" other="Limited" />
-          <ComparisonRow label="Bring your own AI" lazydoc="Yes" other="No" />
-          <ComparisonRow label="Desktop and system capture" lazydoc="Yes" other="Browser-first" />
-          <ComparisonRow label="Works with dev workflows" lazydoc="Yes" other="Not really" />
-          <ComparisonRow label="Subscription required" lazydoc="No" other="Yes" />
-          <ComparisonRow label="Token cost control" lazydoc="You control it" other="Hidden" />
-        </Card>
-        <p className="mt-5 text-center text-lg text-slate-400">LazyDoc does not live in your browser. It lives where your work happens.</p>
-      </section>
-
-      <section id="how" className="pb-24">
-        <SectionTitle eyebrow="How it works" title="A simple loop. No ceremony." body="Record, process, generate, export. That is the whole point. Nobody wants a 14-step onboarding ritual for documentation software." />
-        <div className="grid gap-5 md:grid-cols-4">
-          <StepCard number="1" title="Record" text="Capture your screen or a single app window while you do the actual work." />
-          <StepCard number="2" title="Process" text="LazyDoc analyzes the workflow using your configured provider or local model." />
-          <StepCard number="3" title="Generate" text="Create a clean guide with screenshots, headings, and steps that make sense." />
-          <StepCard number="4" title="Export" text="Push it to Markdown, PDF, or wherever your team keeps the official truth." />
-        </div>
-      </section>
-
-      <section className="pb-24">
-        <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-          <Card className="rounded-[32px] border-[#2B3B6C] bg-gradient-to-br from-[#101726] to-[#0A0D15]">
-            <div className="p-8 md:p-10">
-              <div className="mb-4 text-xs uppercase tracking-[0.32em] text-slate-500">BYOK advantage</div>
-              <h3 className="mb-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">We don’t charge you for AI. That’s your job.</h3>
-              <p className="max-w-2xl text-lg leading-8 text-slate-400">Most AI tools resell compute at a markup and bury it in pricing. LazyDoc doesn’t sit between you and your model. You pick the provider. You own the spend.</p>
-              <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <DocStep id="pricing" number="03" title="Everything included. One price.">
+            <p className="text-lg leading-8 text-slate-400">
+              No subscription tiers. No seat limits. No hidden costs waiting inside a usage dashboard. One purchase, full access, every future update included.
+            </p>
+            <DocCallout variant="warning">
+              BYOK means you bring your own API key — LazyDoc adds zero markup. Your AI spend goes directly to your provider at their standard rates.
+            </DocCallout>
+            <div className="grid gap-6 md:grid-cols-[1fr_1fr]">
+              <PricingCard />
+              <div className="grid content-start gap-3">
                 {[
-                  "No token markup",
-                  "No forced cloud dependency",
-                  "Swap models anytime",
-                  "Use local LLMs if you want",
-                  "Pay providers directly",
-                  "No vendor lock-in games",
-                ].map((item) => (
-                  <div key={item} className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-4 text-slate-200">{item}</div>
+                  { icon: <Lock className="h-4 w-4" />, t: "Keys stored locally", b: "API credentials stay on your machine. No SaaS backend ever sees them." },
+                  { icon: <Cpu className="h-4 w-4" />, t: "Works with your stack", b: "OpenAI, Anthropic, Ollama, LM Studio — swap any time." },
+                  { icon: <Shield className="h-4 w-4" />, t: "Portable outputs", b: "Markdown and PDF exports that live outside the tool forever." },
+                  { icon: <Zap className="h-4 w-4" />, t: "Desktop-first, macOS native", b: "Captures anything on screen — not just what's in a browser tab." },
+                ].map(({ icon, t, b }) => (
+                  <div key={t} className="flex gap-3 rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+                    <div className="mt-0.5 shrink-0 text-slate-400">{icon}</div>
+                    <div>
+                      <div className="text-sm font-medium text-slate-200">{t}</div>
+                      <div className="mt-0.5 text-xs leading-5 text-slate-500">{b}</div>
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
-          </Card>
+          </DocStep>
 
-          <div id="pricing">
-            <PricingCard />
-          </div>
-        </div>
-      </section>
+          <DocStep id="faq" number="04" title="Everything you were about to Google.">
+            <p className="text-lg leading-8 text-slate-400">
+              The questions worth answering before you buy.
+            </p>
+            <FAQSection inline />
+          </DocStep>
 
-      <section className="pb-24">
-        <SectionTitle eyebrow="Use cases" title="Useful immediately." body="This is not a vague AI toy. It solves a painfully specific problem across engineering, IT, support, onboarding, and internal enablement." />
-        <div className="grid gap-5 md:grid-cols-3">
-          <FeatureCard icon={<Terminal className="h-5 w-5" />} title="For developers" text="Document setup flows, feature walkthroughs, QA paths, deploy steps, and weird fixes before they disappear into Slack archaeology." />
-          <FeatureCard icon={<Layers3 className="h-5 w-5" />} title="For IT and ops" text="Build runbooks while troubleshooting, preserve tribal knowledge, and stop rebuilding instructions from memory under pressure." />
-          <FeatureCard icon={<BookOpen className="h-5 w-5" />} title="For onboarding" text="Turn repeated walkthroughs into durable guides so new hires stop needing a personal tour guide for every tool." />
-        </div>
-      </section>
-
-      <section className="pb-24">
-        <SectionTitle eyebrow="Trust" title="The security questions already have answers." body="Because the first thing a technical buyer is going to ask is where the key lives, where the recordings go, and whether this turns into a compliance migraine." />
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          <FeatureCard icon={<Lock className="h-5 w-5" />} title="Keys stored locally" text="Keep API credentials on device instead of tossing them into yet another random SaaS backend." />
-          <FeatureCard icon={<Terminal className="h-5 w-5" />} title="Works with your stack" text="Pair it with hosted providers or local models depending on cost, privacy, and how allergic you are to recurring bills." />
-          <FeatureCard icon={<Shield className="h-5 w-5" />} title="Portable outputs" text="Generated docs are exportable and usable outside the product, which means your knowledge does not get trapped." />
-          <FeatureCard icon={<Cpu className="h-5 w-5" />} title="Desktop-first workflow" text="A native-feeling macOS experience and a site that actually matches the product instead of pretending it is another generic dashboard." />
-        </div>
-      </section>
-
-      <section className="pb-24">
-        <SectionTitle eyebrow="What people will say" title="The kind of reaction you want." body="A decent product should make people feel relieved, slightly smug, and mildly annoyed they were doing it the hard way before." />
-        <div className="grid gap-5 md:grid-cols-3">
-          <TestimonialCard quote="This replaced half my Notion cleanup work." author="Alex R." role="Platform engineer" />
-          <TestimonialCard quote="We finally have runbooks created during the actual incident instead of rewritten three days later." author="Sam T." role="Infrastructure lead" />
-          <TestimonialCard quote="The BYOK part sold me. I do not need another SaaS marking up token costs like it’s doing me a favor." author="Jordan K." role="Indie developer" />
-        </div>
-      </section>
-
-      <FAQSection />
-
-      <section className="pb-10">
-        <div className="rounded-[36px] border border-[#2B3B6C] bg-gradient-to-r from-[#101726] via-[#0D1220] to-[#101428] p-8 md:p-12">
-          <div className="grid items-center gap-8 md:grid-cols-[1fr_auto]">
-            <div>
-              <div className="mb-4 text-xs uppercase tracking-[0.32em] text-slate-500">Final CTA</div>
-              <h2 className="text-4xl font-semibold tracking-tight text-white md:text-5xl">Stop documenting the hard way.</h2>
-              <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-400">You already did the work. Let the documentation take care of itself.</p>
-            </div>
-            <div className="flex flex-col gap-3 sm:flex-row md:flex-col">
-              <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx" className="px-6 py-4">Get LazyDoc — $39.99</PrimaryButton>
-              <SecondaryButton onClick={() => setPage("features")} className="px-6 py-4">Explore features</SecondaryButton>
+          {/* Final CTA */}
+          <div className="py-12">
+            <div className="rounded-[36px] border border-[#2B3B6C] bg-gradient-to-r from-[#101726] via-[#0D1220] to-[#101428] p-8 md:p-12">
+              <div className="grid items-center gap-8 md:grid-cols-[1fr_auto]">
+                <div>
+                  <div className="mb-4 text-xs uppercase tracking-[0.32em] text-slate-500">Get started</div>
+                  <h2 className="text-4xl font-black tracking-tight text-white md:text-5xl">Stop documenting the hard way.</h2>
+                  <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-400">You already did the work. Let the documentation take care of itself.</p>
+                </div>
+                <div className="flex flex-col gap-3 sm:flex-row md:flex-col">
+                  <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx" className="px-6 py-4">Get LazyDoc — $39.99</PrimaryButton>
+                  <SecondaryButton onClick={() => setPage("features")} className="px-6 py-4">Explore features</SecondaryButton>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+
+        </main>
+      </div>
 
       <footer className="border-t border-white/6 py-8 text-sm text-slate-500">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
