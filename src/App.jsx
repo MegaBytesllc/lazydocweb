@@ -647,6 +647,9 @@ function HomePage({ setPage }) {
             <p className="text-lg leading-8 text-slate-400">
               Every guide you generate is automatically saved. Pull up any past guide, open it as a side-by-side reference, or connect your Obsidian vault to browse and search your markdown notes without leaving LazyDoc.
             </p>
+            <div className="overflow-hidden rounded-2xl border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+              <img src="/Vault with reference doc pulled up.png" alt="LazyDoc showing vault file list, active guide, and reference panel open side by side" className="w-full" />
+            </div>
             <div className="grid gap-3 sm:grid-cols-2">
               {[
                 { icon: <BookOpen className="h-4 w-4" />, t: "Auto-saves last 10 guides", b: "Thumbnail previews, date, step count, and software badge per entry." },
