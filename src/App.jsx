@@ -432,23 +432,6 @@ function DocStep({ id, number, title, children }) {
 function HomePage({ setPage }) {
   return (
     <>
-      <nav className="mb-10 flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 backdrop-blur-md">
-        <div className="flex items-center gap-3">
-          <MacIcon />
-          <div>
-            <div className="text-lg font-semibold tracking-tight">LazyDoc</div>
-            <div className="text-xs uppercase tracking-[0.22em] text-slate-500">BYOK documentation for devs</div>
-          </div>
-        </div>
-        <div className="hidden items-center gap-8 text-sm text-slate-400 md:flex">
-          <a href="#how-it-works" className="hover:text-white">How It Works</a>
-          <button onClick={() => setPage("features")} className="hover:text-white">Features</button>
-          <button onClick={() => setPage("compare")} className="hover:text-white">Compare</button>
-          <a href="#pricing" className="hover:text-white">Pricing</a>
-        </div>
-        <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx">Get LazyDoc — $39.99</PrimaryButton>
-      </nav>
-
       {/* Document Header */}
       <div className="border-b border-white/8 pb-8 mb-0">
         <h1 className="mb-5 text-5xl font-black tracking-tight text-white md:text-6xl lg:text-7xl leading-[1.04]">
