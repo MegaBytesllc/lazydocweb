@@ -520,22 +520,41 @@ function HomePage({ setPage }) {
             <p className="text-lg leading-8 text-slate-400">
               Start a recording, do your work exactly as you normally would, then click Generate. LazyDoc analyzes each frame, writes the steps, captures the screenshots, and exports a clean guide — no cleanup required.
             </p>
-            <DocCallout>
-              LazyDoc uses your own AI provider — OpenAI, Anthropic, or a local model. Zero token markup. You pay your provider directly.
-            </DocCallout>
-            <MockAppPanel />
-            <div className="grid gap-4 sm:grid-cols-3">
-              {[
-                { n: "1", label: "Record", sub: "Capture your full screen or a single app window while you work." },
-                { n: "2", label: "Generate", sub: "Run it through your own AI. LazyDoc analyzes each frame and writes the steps." },
-                { n: "3", label: "Export", sub: "Ship as Markdown, PDF, or polished internal content." },
-              ].map(({ n, label, sub }) => (
-                <div key={n} className="rounded-2xl border border-white/8 bg-white/[0.03] p-5">
-                  <div className="mb-3 flex h-8 w-8 items-center justify-center rounded-full bg-[#162447] text-sm font-semibold text-[#9FB6FF]">{n}</div>
-                  <div className="font-semibold text-slate-200">{label}</div>
-                  <div className="mt-1 text-sm leading-6 text-slate-500">{sub}</div>
-                </div>
-              ))}
+
+            {/* Step 1: Record */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#162447] text-xs font-semibold text-[#9FB6FF]">1</div>
+                <div className="font-semibold text-slate-200">Open LazyDoc and choose your capture source</div>
+              </div>
+              <div className="overflow-hidden rounded-2xl border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+                <img src="/ss-record.png" alt="LazyDoc record panel showing Screen and Window capture options" className="w-full" />
+              </div>
+            </div>
+
+            {/* Step 2: Generate */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#162447] text-xs font-semibold text-[#9FB6FF]">2</div>
+                <div className="font-semibold text-slate-200">Record your workflow — LazyDoc generates the guide</div>
+              </div>
+              <DocCallout>
+                LazyDoc uses your own AI provider — OpenAI, Anthropic, or a local model. Zero token markup. You pay your provider directly.
+              </DocCallout>
+              <div className="overflow-hidden rounded-2xl border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+                <img src="/ss-guide.png" alt="LazyDoc showing a generated guide with table of contents and step-by-step output" className="w-full" />
+              </div>
+            </div>
+
+            {/* Step 3: Edit & Export */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#162447] text-xs font-semibold text-[#9FB6FF]">3</div>
+                <div className="font-semibold text-slate-200">Edit in the built-in editor, then export anywhere</div>
+              </div>
+              <div className="overflow-hidden rounded-2xl border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+                <img src="/ss-editor.png" alt="LazyDoc editor showing markdown source and live preview side by side" className="w-full" />
+              </div>
             </div>
           </DocStep>
 
@@ -543,9 +562,14 @@ function HomePage({ setPage }) {
             <p className="text-lg leading-8 text-slate-400">
               No subscription tiers. No seat limits. No hidden costs waiting inside a usage dashboard. One purchase, full access, every future update included.
             </p>
-            <DocCallout variant="warning">
-              BYOK means you bring your own API key — LazyDoc adds zero markup. Your AI spend goes directly to your provider at their standard rates.
-            </DocCallout>
+            <div className="grid gap-6 md:grid-cols-[1fr_1fr] items-start">
+              <DocCallout variant="warning">
+                BYOK means you bring your own API key — LazyDoc adds zero markup. Your AI spend goes directly to your provider at their standard rates.
+              </DocCallout>
+              <div className="overflow-hidden rounded-2xl border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+                <img src="/ss-settings.png" alt="LazyDoc AI backend settings showing Anthropic, OpenAI, and local Ollama options" className="w-full" />
+              </div>
+            </div>
             <div className="grid gap-6 md:grid-cols-[1fr_1fr]">
               <PricingCard />
               <div className="grid content-start gap-3">
