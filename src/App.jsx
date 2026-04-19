@@ -430,6 +430,25 @@ function DocStep({ id, number, title, children }) {
 }
 
 function HomePage({ setPage }) {
+  const [activeSection, setActiveSection] = useState("problem");
+
+  useEffect(() => {
+    const ids = ["problem","workflow","frames","ai","editor","collections","export","pricing","customization","security","faq"];
+    const onScroll = () => {
+      let current = ids[0];
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= window.innerHeight * 0.35) {
+          current = id;
+        }
+      }
+      setActiveSection(current);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <>
       {/* Document Header */}
@@ -460,41 +479,44 @@ function HomePage({ setPage }) {
       {/* Two-column document layout */}
       <div className="grid gap-0 lg:grid-cols-[260px_1fr]">
 
-        {/* Sidebar */}
+        {/* Sidebar — docked TOC */}
         <aside className="hidden lg:block">
-          <div className="sticky top-8 pr-10 pt-10 space-y-6">
-            <div>
-              <div className="mb-3 text-xs font-semibold uppercase tracking-[0.28em] text-[#5B7CFA]">Contents</div>
-              <nav className="space-y-0.5">
-                {[
-                  { num: "01", label: "The Problem", href: "#problem" },
-                  { num: "02", label: "Core Workflow", href: "#workflow" },
-                  { num: "03", label: "Frame Review", href: "#frames" },
-                  { num: "04", label: "AI Generation", href: "#ai" },
-                  { num: "05", label: "Document Editor", href: "#editor" },
-                  { num: "06", label: "Collections & Vault", href: "#collections" },
-                  { num: "07", label: "Export", href: "#export" },
-                  { num: "08", label: "Pricing", href: "#pricing" },
-                  { num: "09", label: "Customization", href: "#customization" },
-                  { num: "10", label: "Security & Licensing", href: "#security" },
-                  { num: "11", label: "FAQ", href: "#faq" },
-                ].map(({ num, label, href }) => (
-                  <a key={num} href={href} className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm text-slate-400 hover:text-white transition">
-                    <span className="font-semibold text-[#5B7CFA]">{num}</span>
-                    <span>{label}</span>
+          <div className="sticky top-0 h-screen flex flex-col justify-center pr-8">
+            <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.34em] text-slate-700">Contents</p>
+            <nav className="space-y-0.5">
+              {[
+                { num: "01", label: "The Problem", href: "#problem", id: "problem" },
+                { num: "02", label: "Core Workflow", href: "#workflow", id: "workflow" },
+                { num: "03", label: "Frame Review", href: "#frames", id: "frames" },
+                { num: "04", label: "AI Generation", href: "#ai", id: "ai" },
+                { num: "05", label: "Document Editor", href: "#editor", id: "editor" },
+                { num: "06", label: "Collections & Vault", href: "#collections", id: "collections" },
+                { num: "07", label: "Export", href: "#export", id: "export" },
+                { num: "08", label: "Pricing", href: "#pricing", id: "pricing" },
+                { num: "09", label: "Customization", href: "#customization", id: "customization" },
+                { num: "10", label: "Security & Licensing", href: "#security", id: "security" },
+                { num: "11", label: "FAQ", href: "#faq", id: "faq" },
+              ].map(({ num, label, href, id }) => {
+                const isActive = activeSection === id;
+                return (
+                  <a
+                    key={id}
+                    href={href}
+                    className={`group flex items-center gap-2 rounded-lg px-2 py-[5px] text-xs transition-all duration-200 ${
+                      isActive ? "text-white" : "text-slate-600 hover:text-slate-400"
+                    }`}
+                  >
+                    <span className={`tabular-nums text-[10px] font-semibold transition-colors duration-200 ${isActive ? "text-[#7B9FFF]" : "text-slate-700 group-hover:text-slate-500"}`}>
+                      {num}
+                    </span>
+                    <span className="leading-none">{label}</span>
+                    {isActive && (
+                      <span className="ml-auto h-1 w-1 shrink-0 rounded-full bg-[#5B7CFA]" />
+                    )}
                   </a>
-                ))}
-              </nav>
-            </div>
-            <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-5 text-sm leading-7 text-slate-400">
-              A desktop app that captures real workflows and turns them into clean documentation. No subscriptions. No AI markup. Your key, your data.
-            </div>
-            <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx" className="w-full justify-center">
-              Get LazyDoc — $39.99
-            </PrimaryButton>
-            <SecondaryButton onClick={() => setPage("features")} className="w-full justify-center">
-              Explore features
-            </SecondaryButton>
+                );
+              })}
+            </nav>
           </div>
         </aside>
 
