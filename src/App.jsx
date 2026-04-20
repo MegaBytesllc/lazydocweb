@@ -848,7 +848,7 @@ function HomePage({ setPage }) {
             <button onClick={() => setPage("features")} className="hover:text-white">Features</button>
             <button onClick={() => setPage("compare")} className="hover:text-white">Compare</button>
             <a href="#pricing" className="hover:text-white">Pricing</a>
-            <a href="mailto:Support@megabytesnyc.com" className="hover:text-white">Support@megabytesnyc.com</a>
+            <a href="mailto:help@lazydoc.app" className="hover:text-white">help@lazydoc.app</a>
           </div>
         </div>
       </footer>
