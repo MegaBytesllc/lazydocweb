@@ -635,7 +635,7 @@ function HomePage({ setPage }) {
               ))}
             </div>
             <div className="overflow-hidden rounded-2xl border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
-              <img src="/Newlygenerated doc.png" alt="Newly generated LazyDoc guide showing structured step-by-step output" className="w-full" />
+              <img src="/ss-newdoc.png" alt="Newly generated LazyDoc guide showing structured step-by-step output" className="w-full" />
             </div>
           </DocStep>
 
@@ -1045,7 +1045,7 @@ function FeaturesPage({ setPage }) {
           ))}
         </div>
         <div className="overflow-hidden rounded-2xl border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
-          <img src="/Newlygenerated doc.png" alt="Newly generated LazyDoc guide" className="w-full" />
+          <img src="/ss-newdoc.png" alt="Newly generated LazyDoc guide" className="w-full" />
         </div>
       </DocStep>
 
