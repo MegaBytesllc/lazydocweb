@@ -856,260 +856,463 @@ function HomePage({ setPage }) {
   );
 }
 
-function FeaturesPage({ setPage }) {
+function DocPageShell({ setPage, title, titleAccent, badge, tocItems, activeSection, children }) {
   return (
     <>
-      <nav className="mb-16 flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 backdrop-blur-md">
-        <div className="flex items-center gap-3">
-          <MacIcon />
-          <div>
-            <div className="text-lg font-semibold tracking-tight">LazyDoc</div>
-            <div className="text-xs uppercase tracking-[0.22em] text-slate-500">Feature overview</div>
-          </div>
+      <div className="border-b border-white/8 pb-8 mb-0">
+        <button onClick={() => setPage("home")} className="mb-5 inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-300 transition">
+          <ChevronLeft className="h-4 w-4" /> Back to home
+        </button>
+        <h1 className="mb-5 text-5xl font-black tracking-tight text-white md:text-6xl lg:text-7xl leading-[1.04]">
+          {title}<br />
+          <span className="bg-gradient-to-r from-[#7EA0FF] via-[#90A2FF] to-[#B88BFF] bg-clip-text text-transparent">{titleAccent}</span>
+        </h1>
+        <div className="flex flex-wrap items-center gap-2 text-sm text-slate-400">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-slate-300">
+            <MacIcon className="h-4 w-4" /> LazyDoc
+          </span>
+          <span className="text-slate-600">·</span>
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-white/8 bg-white/[0.03] px-3 py-1">
+            <Download className="h-3.5 w-3.5 text-slate-500" /> macOS
+          </span>
+          <span className="text-slate-600">·</span>
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-white/8 bg-white/[0.03] px-3 py-1">
+            <Layers3 className="h-3.5 w-3.5 text-slate-500" /> {badge}
+          </span>
+          <span className="text-slate-600">·</span>
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-white/8 bg-white/[0.03] px-3 py-1">
+            <CircleDollarSign className="h-3.5 w-3.5 text-slate-500" /> One-time $39.99
+          </span>
         </div>
-        <div className="hidden items-center gap-8 text-sm text-slate-400 md:flex">
-          <button onClick={() => setPage("home")} className="hover:text-white">Home</button>
-          <a href="#capture" className="hover:text-white">Capture</a>
-          <a href="#generate" className="hover:text-white">Generate</a>
-          <a href="#export" className="hover:text-white">Export</a>
-          <a href="#byok" className="hover:text-white">BYOK</a>
-          <button onClick={() => setPage("compare")} className="hover:text-white">Compare</button>
-        </div>
-        <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx">Get LazyDoc — $39.99</PrimaryButton>
-      </nav>
+      </div>
 
-      <section className="pb-20 pt-2">
-        <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
-          <div>
-            <button onClick={() => setPage("home")} className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm text-slate-300 hover:bg-white/[0.08]">
-              <ChevronLeft className="h-4 w-4" /> Back to home
-            </button>
-            <div className="mb-4 text-xs uppercase tracking-[0.32em] text-slate-500">Feature page</div>
-            <h1 className="max-w-4xl text-5xl font-semibold tracking-tight text-white md:text-7xl md:leading-[1.02]">
-              Everything LazyDoc does, <span className="bg-gradient-to-r from-[#7EA0FF] via-[#90A2FF] to-[#B88BFF] bg-clip-text text-transparent">without the SaaS nonsense.</span>
-            </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-400 md:text-xl">
-              Capture real workflows, generate usable documentation, export it anywhere, and keep your AI stack under your control.
-            </p>
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-              <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx">Get LazyDoc — $39.99</PrimaryButton>
-              <SecondaryButton onClick={() => setPage("home")}>Back to landing page</SecondaryButton>
-            </div>
+      <div className="grid gap-0 lg:grid-cols-[260px_1fr]">
+        <aside className="hidden lg:block">
+          <div className="sticky top-0 h-screen flex flex-col justify-center pr-8">
+            <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.34em] text-slate-700">Contents</p>
+            <nav className="space-y-0.5">
+              {tocItems.map(({ num, label, href, id }) => {
+                const isActive = activeSection === id;
+                return (
+                  <a key={id} href={href} className={`group flex items-center gap-2 rounded-lg px-2 py-[5px] text-xs transition-all duration-200 ${isActive ? "text-white" : "text-slate-600 hover:text-slate-400"}`}>
+                    <span className={`tabular-nums text-[10px] font-semibold transition-colors duration-200 ${isActive ? "text-[#7B9FFF]" : "text-slate-700 group-hover:text-slate-500"}`}>{num}</span>
+                    <span className="leading-none">{label}</span>
+                    {isActive && <span className="ml-auto h-1 w-1 shrink-0 rounded-full bg-[#5B7CFA]" />}
+                  </a>
+                );
+              })}
+            </nav>
           </div>
-          <div className="grid gap-5 sm:grid-cols-2">
-            <FeatureHeroCard icon={<Camera className="h-5 w-5" />} title="Capture what actually happened" text="Record your full screen or a single app window while you work. No staging. No fake walkthrough. No memory reconstruction later." />
-            <FeatureHeroCard icon={<Wand2 className="h-5 w-5" />} title="Generate clean documentation" text="Turn recorded workflows into readable step-by-step guides with structure, screenshots, and useful flow instead of noise." />
-            <FeatureHeroCard icon={<FolderOutput className="h-5 w-5" />} title="Export where your team lives" text="Ship docs as Markdown, PDF, or polished internal content without trapping the output inside another tool." />
-            <FeatureHeroCard icon={<ScanText className="h-5 w-5" />} title="Use your own model" text="OpenAI, Anthropic, or local LLMs. You choose the provider, the spend, and the privacy posture." />
-          </div>
-        </div>
-      </section>
+        </aside>
 
-      <section id="capture" className="pb-24">
-        <SectionTitle eyebrow="Capture" title="Record the workflow while it is real." body="The biggest documentation failure happens after the task is done. LazyDoc captures the work as it happens, so you stop rebuilding the steps from memory later." />
-        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-          <Card className="overflow-hidden bg-[#0B1018]">
-            <div className="grid min-h-[420px] md:grid-cols-[260px_1fr]">
-              <div className="border-r border-white/6 bg-[#0A0D15] p-5">
-                <div className="mb-4 text-xs uppercase tracking-[0.28em] text-slate-500">Capture modes</div>
-                <div className="space-y-3">
-                  <div className="rounded-2xl border border-[#2E3E72] bg-[#121B32] p-4 text-slate-100">Screen recording</div>
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-slate-300">Window recording</div>
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-slate-300">Live preview</div>
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-slate-300">One-click start</div>
+        <main className="min-w-0 pt-2 lg:border-l lg:border-white/6 lg:pl-12">
+          {children}
+
+          <div className="py-12">
+            <div className="rounded-[36px] border border-[#2B3B6C] bg-gradient-to-r from-[#101726] via-[#0D1220] to-[#101428] p-8 md:p-12">
+              <div className="grid items-center gap-8 md:grid-cols-[1fr_auto]">
+                <div>
+                  <div className="mb-4 text-xs uppercase tracking-[0.32em] text-slate-500">Get started</div>
+                  <h2 className="text-4xl font-black tracking-tight text-white md:text-5xl">Stop documenting the hard way.</h2>
+                  <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-400">You already did the work. Let the documentation take care of itself.</p>
                 </div>
-              </div>
-              <div className="relative flex items-center justify-center p-8">
-                <GridGlow />
-                <div className="relative rounded-[30px] border border-white/10 bg-white/[0.03] p-8 text-center">
-                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-white/10 bg-white/[0.04]"><Camera className="h-7 w-7 text-slate-200" /></div>
-                  <div className="text-2xl font-semibold text-white">Capture once</div>
-                  <div className="mt-3 max-w-md text-slate-500 leading-7">LazyDoc starts with the same thing you are already doing: the actual work.</div>
+                <div className="flex flex-col gap-3 sm:flex-row md:flex-col">
+                  <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx" className="px-6 py-4">Get LazyDoc — $39.99</PrimaryButton>
+                  <SecondaryButton onClick={() => setPage("home")} className="px-6 py-4">Back to home</SecondaryButton>
                 </div>
               </div>
             </div>
-          </Card>
-          <div className="grid gap-5">
-            <FeatureCard icon={<Monitor className="h-5 w-5" />} title="Full-screen capture" text="Record dashboards, terminals, settings panels, admin portals, and anything else your workflow touches." />
-            <FeatureCard icon={<AppWindow className="h-5 w-5" />} title="Window-only capture" text="Focus on one application when you do not need the noise of the whole desktop." />
-            <FeatureCard icon={<Play className="h-5 w-5" />} title="Live preview" text="See what is being captured before you commit to generating output from it." />
           </div>
-        </div>
-      </section>
+        </main>
+      </div>
 
-      <section id="generate" className="pb-24">
-        <SectionTitle eyebrow="Generate" title="Turn recordings into guides people can actually use." body="LazyDoc is not trying to create a transcript of chaos. It produces structured, readable output with steps that make sense and screenshots where they matter." />
-        <div className="grid gap-5 md:grid-cols-3">
-          <FeatureCard icon={<Sparkles className="h-5 w-5" />} title="Step-by-step structure" text="Turn raw activity into readable instructions instead of a timeline dump nobody wants to parse." />
-          <FeatureCard icon={<FileText className="h-5 w-5" />} title="Readable formatting" text="Clear headings, sensible step flow, and output that looks like it belongs in a real runbook." />
-          <FeatureCard icon={<Workflow className="h-5 w-5" />} title="Generalize or preserve detail" text="Choose whether you want reusable language or exact commands, values, and configuration specifics." />
-        </div>
-      </section>
-
-      <section id="export" className="pb-24">
-        <SectionTitle eyebrow="Export" title="Your output should not be trapped inside the product." body="Once the guide is generated, it should be easy to move it into your wiki, docs repo, knowledge base, or incident process without ceremony." />
-        <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
-          <div className="grid gap-5">
-            <FeatureCard icon={<Download className="h-5 w-5" />} title="Markdown export" text="Drop it into docs-as-code, Git repos, internal notes, or a README without reformatting everything by hand." />
-            <FeatureCard icon={<FolderOutput className="h-5 w-5" />} title="PDF-ready output" text="Create something shareable fast when a polished static document is the easiest way to move work forward." />
-            <FeatureCard icon={<BookOpen className="h-5 w-5" />} title="Wiki-friendly content" text="Move the generated guide into whatever system your team already uses to keep the official version of truth." />
-          </div>
-          <Card className="relative overflow-hidden bg-[#0B1018] p-8 md:p-10">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(91,124,250,0.12),transparent_34%)]" />
-            <div className="relative">
-              <div className="mb-4 inline-flex rounded-full border border-white/8 bg-white/[0.04] px-4 py-2 text-xs uppercase tracking-[0.28em] text-slate-500">Export targets</div>
-              <div className="grid gap-4 sm:grid-cols-2">
-                {["Markdown", "PDF", "Internal wiki", "Runbooks", "Knowledge base", "Handoff docs"].map((item) => (
-                  <div key={item} className="rounded-2xl border border-white/8 bg-white/[0.03] px-4 py-4 text-slate-200">{item}</div>
-                ))}
-              </div>
-            </div>
-          </Card>
-        </div>
-      </section>
-
-      <section id="byok" className="pb-24">
-        <SectionTitle eyebrow="BYOK" title="Bring your own model. Keep your own leverage." body="This is not a cute checkbox feature. It is the whole pricing and control story. You decide which provider to use, what it costs, and how private the workflow needs to be." />
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          <FeatureCard icon={<KeyRound className="h-5 w-5" />} title="Use hosted providers" text="Plug in OpenAI or Anthropic when you want speed and convenience." />
-          <FeatureCard icon={<Cpu className="h-5 w-5" />} title="Use local models" text="Route generation through your own stack when privacy or cost control matters more." />
-          <FeatureCard icon={<Shield className="h-5 w-5" />} title="No hidden markup" text="LazyDoc does not quietly resell your tokens with a smile and a monthly bill." />
-          <FeatureCard icon={<Lock className="h-5 w-5" />} title="Keep keys local" text="Your credentials stay on device instead of disappearing into another SaaS backend." />
-        </div>
-      </section>
-
-      <section className="pb-24">
-        <SectionTitle eyebrow="Feature summary" title="What you are actually buying." body="A desktop tool that captures real workflows, turns them into usable documentation, exports them anywhere, and does not hold your AI usage hostage." />
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          <FeatureHeroCard icon={<Camera className="h-5 w-5" />} title="Capture" text="Record screen or window workflows as they happen." />
-          <FeatureHeroCard icon={<Wand2 className="h-5 w-5" />} title="Generate" text="Produce readable documentation with structure and screenshots." />
-          <FeatureHeroCard icon={<FolderOutput className="h-5 w-5" />} title="Export" text="Move output into Markdown, PDFs, and team knowledge systems." />
-          <FeatureHeroCard icon={<ScanText className="h-5 w-5" />} title="Control" text="Use your own AI provider and keep cost, privacy, and flexibility." />
-        </div>
-      </section>
-
-      <section className="pb-10">
-        <div className="rounded-[36px] border border-[#2B3B6C] bg-gradient-to-r from-[#101726] via-[#0D1220] to-[#101428] p-8 md:p-12">
-          <div className="grid items-center gap-8 md:grid-cols-[1fr_auto]">
+      <footer className="border-t border-white/6 py-8 text-sm text-slate-500">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-center gap-3">
+            <MacIcon />
             <div>
-              <div className="mb-4 text-xs uppercase tracking-[0.32em] text-slate-500">Ready to use it?</div>
-              <h2 className="text-4xl font-semibold tracking-tight text-white md:text-5xl">Everything above is included for $39.99.</h2>
-              <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-400">One-time purchase. Bring your own AI. Keep your own leverage.</p>
-            </div>
-            <div className="flex flex-col gap-3 sm:flex-row md:flex-col">
-              <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx" className="px-6 py-4">Get LazyDoc — $39.99</PrimaryButton>
-              <SecondaryButton onClick={() => setPage("home")} className="px-6 py-4">Back to home</SecondaryButton>
+              <div className="font-medium text-slate-300">LazyDoc</div>
+              <div>BYOK documentation for devs, IT, and people tired of writing the same guide twice.</div>
             </div>
           </div>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
+            <button onClick={() => setPage("home")} className="hover:text-white">Home</button>
+            <button onClick={() => setPage("features")} className="hover:text-white">Features</button>
+            <button onClick={() => setPage("compare")} className="hover:text-white">Compare</button>
+            <a href="mailto:help@lazydoc.app" className="hover:text-white">help@lazydoc.app</a>
+          </div>
         </div>
-      </section>
+      </footer>
     </>
   );
 }
 
-function ComparePage({ setPage }) {
+function FeaturesPage({ setPage }) {
+  const [activeSection, setActiveSection] = useState("f-capture");
+  const tocItems = [
+    { num: "01", label: "Capture", href: "#f-capture", id: "f-capture" },
+    { num: "02", label: "Frame Review", href: "#f-frames", id: "f-frames" },
+    { num: "03", label: "AI Generation", href: "#f-generate", id: "f-generate" },
+    { num: "04", label: "Document Editor", href: "#f-editor", id: "f-editor" },
+    { num: "05", label: "Export", href: "#f-export", id: "f-export" },
+    { num: "06", label: "BYOK", href: "#f-byok", id: "f-byok" },
+    { num: "07", label: "Customization", href: "#f-custom", id: "f-custom" },
+    { num: "08", label: "Pricing", href: "#f-pricing", id: "f-pricing" },
+  ];
+
+  useEffect(() => {
+    const ids = tocItems.map(t => t.id);
+    const onScroll = () => {
+      let current = ids[0];
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= window.innerHeight * 0.35) current = id;
+      }
+      setActiveSection(current);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <>
-      <nav className="mb-16 flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 backdrop-blur-md">
-        <div className="flex items-center gap-3">
-          <MacIcon />
-          <div>
-            <div className="text-lg font-semibold tracking-tight">LazyDoc</div>
-            <div className="text-xs uppercase tracking-[0.22em] text-slate-500">Comparison page</div>
-          </div>
-        </div>
-        <div className="hidden items-center gap-8 text-sm text-slate-400 md:flex">
-          <button onClick={() => setPage("home")} className="hover:text-white">Home</button>
-          <button onClick={() => setPage("features")} className="hover:text-white">Features</button>
-          <a href="#table" className="hover:text-white">Matrix</a>
-          <a href="#verdict" className="hover:text-white">Verdict</a>
-        </div>
-        <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx">Get LazyDoc — $39.99</PrimaryButton>
-      </nav>
+    <DocPageShell setPage={setPage} title="Every feature." titleAccent="No fluff." badge="8 sections" tocItems={tocItems} activeSection={activeSection}>
 
-      <section className="pb-20 pt-2">
-        <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
-          <div>
-            <button onClick={() => setPage("home")} className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm text-slate-300 hover:bg-white/[0.08]">
-              <ChevronLeft className="h-4 w-4" /> Back to home
-            </button>
-            <div className="mb-4 text-xs uppercase tracking-[0.32em] text-slate-500">Compare LazyDoc</div>
-            <h1 className="max-w-4xl text-5xl font-semibold tracking-tight text-white md:text-7xl md:leading-[1.02]">
-              How LazyDoc stacks up against the <span className="bg-gradient-to-r from-[#7EA0FF] via-[#90A2FF] to-[#B88BFF] bg-clip-text text-transparent">top 3 similar tools.</span>
-            </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-400 md:text-xl">
-              If you are choosing between Scribe, Tango, and Guidde, the biggest difference is simple: LazyDoc is built for real desktop workflows and lets you bring your own AI instead of renting theirs forever.
-            </p>
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-              <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx">Get LazyDoc — $39.99</PrimaryButton>
-              <SecondaryButton onClick={() => setPage("features")}>See feature breakdown</SecondaryButton>
+      <DocStep id="f-capture" number="01" title="Capture">
+        <p className="text-lg leading-8 text-slate-400">
+          Record your full screen, a single app window, or a browser tab while you work. No staging, no fake walkthroughs, no reconstructing from memory later.
+        </p>
+        <div className="overflow-hidden rounded-2xl border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+          <img src="/ss-record.png" alt="LazyDoc record panel" className="w-full" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {[
+            { icon: <Monitor className="h-4 w-4" />, t: "Full-screen capture", b: "Record dashboards, terminals, admin panels — anything on your desktop." },
+            { icon: <AppWindow className="h-4 w-4" />, t: "Window-only capture", b: "Focus on one app when you don't need the rest of the desktop in frame." },
+            { icon: <Play className="h-4 w-4" />, t: "Live preview", b: "See exactly what's being captured before you start recording." },
+            { icon: <Zap className="h-4 w-4" />, t: "Global hotkey", b: "Cmd+Shift+R starts and stops from any app — no context switching." },
+          ].map(({ icon, t, b }) => (
+            <div key={t} className="flex gap-3 rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+              <div className="mt-0.5 shrink-0 text-slate-400">{icon}</div>
+              <div><div className="text-sm font-medium text-slate-200">{t}</div><div className="mt-0.5 text-xs leading-5 text-slate-500">{b}</div></div>
             </div>
+          ))}
+        </div>
+      </DocStep>
+
+      <DocStep id="f-frames" number="02" title="Frame Review">
+        <p className="text-lg leading-8 text-slate-400">
+          Before anything goes to AI, you review every frame. Cut noise, reorder steps, set a cover image, and add context notes so the AI knows exactly what each frame means.
+        </p>
+        <div className="overflow-hidden rounded-2xl border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+          <img src="/frameselection.png" alt="LazyDoc frame selection grid" className="w-full" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {[
+            { icon: <Layers3 className="h-4 w-4" />, t: "Drag-and-drop reordering", b: "Rearrange frames into the exact sequence before generating." },
+            { icon: <Check className="h-4 w-4" />, t: "Include / exclude frames", b: "One click to remove frames that add noise or repeat content." },
+            { icon: <Camera className="h-4 w-4" />, t: "Hover to preview", b: "Full-size preview on hover so you know what each frame captures." },
+            { icon: <MessageSquareText className="h-4 w-4" />, t: "Per-frame context notes", b: "Add a note to any frame — sent to the AI for more accurate step output." },
+          ].map(({ icon, t, b }) => (
+            <div key={t} className="flex gap-3 rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+              <div className="mt-0.5 shrink-0 text-slate-400">{icon}</div>
+              <div><div className="text-sm font-medium text-slate-200">{t}</div><div className="mt-0.5 text-xs leading-5 text-slate-500">{b}</div></div>
+            </div>
+          ))}
+        </div>
+      </DocStep>
+
+      <DocStep id="f-generate" number="03" title="AI Generation">
+        <p className="text-lg leading-8 text-slate-400">
+          Click Generate and LazyDoc analyzes every frame to write a structured, readable guide. Bring your own Anthropic or OpenAI key, use a local Ollama model, or connect any OpenAI-compatible endpoint.
+        </p>
+        <DocCallout variant="warning">
+          BYOK means zero markup. A typical guide generation costs a few cents in API usage — paid directly to your provider, not to LazyDoc.
+        </DocCallout>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {[
+            { icon: <Cpu className="h-4 w-4" />, t: "Anthropic (Claude)", b: "Best quality output. Requires API key. ~$0.07/guide." },
+            { icon: <Globe className="h-4 w-4" />, t: "OpenAI / compatible endpoints", b: "ChatGPT API, vLLM, LM Studio, LocalAI, Oobabooga." },
+            { icon: <Lock className="h-4 w-4" />, t: "Local AI via Ollama", b: "Free. Private. Runs entirely on your machine — no internet required." },
+            { icon: <Zap className="h-4 w-4" />, t: "Diff-aware re-generation", b: "Unchanged frames are cached — saves time and cuts API cost." },
+            { icon: <Wand2 className="h-4 w-4" />, t: "Prompt templates", b: "Standard, SOP Mode, Customer-Facing, and custom user templates." },
+            { icon: <ScanText className="h-4 w-4" />, t: "Output modifiers", b: "Generalize, Preserve Exact, Formal Style — applied per generation." },
+          ].map(({ icon, t, b }) => (
+            <div key={t} className="flex gap-3 rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+              <div className="mt-0.5 shrink-0 text-slate-400">{icon}</div>
+              <div><div className="text-sm font-medium text-slate-200">{t}</div><div className="mt-0.5 text-xs leading-5 text-slate-500">{b}</div></div>
+            </div>
+          ))}
+        </div>
+        <div className="overflow-hidden rounded-2xl border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+          <img src="/Newlygenerated doc.png" alt="Newly generated LazyDoc guide" className="w-full" />
+        </div>
+      </DocStep>
+
+      <DocStep id="f-editor" number="04" title="Document Editor">
+        <p className="text-lg leading-8 text-slate-400">
+          Every generated guide opens in a full editor. Edit inline, manage steps, rewrite with AI, or drop into the markdown source with live preview — all without leaving the app.
+        </p>
+        <div className="overflow-hidden rounded-2xl border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+          <img src="/ss-editor.png" alt="LazyDoc document editor" className="w-full" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {[
+            { icon: <FileText className="h-4 w-4" />, t: "Inline editing", b: "Edit titles, descriptions, tips, and code snippets in the guide view." },
+            { icon: <Layers3 className="h-4 w-4" />, t: "Add, remove, reorder steps", b: "Full control over step order. Add manual steps anywhere in the guide." },
+            { icon: <Terminal className="h-4 w-4" />, t: "Full markdown editor", b: "Source with live preview and a formatting toolbar for full control." },
+            { icon: <Wand2 className="h-4 w-4" />, t: "AI step rewrite", b: "Rewrite any individual step with a custom instruction." },
+          ].map(({ icon, t, b }) => (
+            <div key={t} className="flex gap-3 rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+              <div className="mt-0.5 shrink-0 text-slate-400">{icon}</div>
+              <div><div className="text-sm font-medium text-slate-200">{t}</div><div className="mt-0.5 text-xs leading-5 text-slate-500">{b}</div></div>
+            </div>
+          ))}
+        </div>
+      </DocStep>
+
+      <DocStep id="f-export" number="05" title="Export">
+        <p className="text-lg leading-8 text-slate-400">
+          Ship your guide in the format your team actually uses — PDF, Markdown, Word, a full folder with images, or a self-contained HTML file with Open Graph meta tags.
+        </p>
+        <div className="overflow-hidden rounded-2xl border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+          <img src="/exportscreen.png" alt="LazyDoc export options" className="w-full" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {[
+            { icon: <FileText className="h-4 w-4" />, t: "PDF", b: "Print-optimized layout — ready to share or attach to a ticket." },
+            { icon: <Terminal className="h-4 w-4" />, t: "Markdown", b: "Clean .md that works in Notion, Obsidian, GitHub, or any docs tool." },
+            { icon: <Download className="h-4 w-4" />, t: "DOCX", b: "Word-compatible for teams that live in Microsoft Office." },
+            { icon: <FolderOutput className="h-4 w-4" />, t: "Folder export", b: "Markdown + images as separate files — version-control friendly." },
+            { icon: <Globe className="h-4 w-4" />, t: "HTML", b: "Self-contained with cover image and Open Graph meta tags." },
+            { icon: <Zap className="h-4 w-4" />, t: "Auto-save to output folder", b: "Set a default folder — no dialog every time you export." },
+          ].map(({ icon, t, b }) => (
+            <div key={t} className="flex gap-3 rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+              <div className="mt-0.5 shrink-0 text-slate-400">{icon}</div>
+              <div><div className="text-sm font-medium text-slate-200">{t}</div><div className="mt-0.5 text-xs leading-5 text-slate-500">{b}</div></div>
+            </div>
+          ))}
+        </div>
+      </DocStep>
+
+      <DocStep id="f-byok" number="06" title="Bring Your Own Key">
+        <p className="text-lg leading-8 text-slate-400">
+          This isn't a checkbox feature — it's the entire pricing and privacy story. You choose the provider, control the spend, and decide how private the workflow needs to be.
+        </p>
+        <div className="overflow-hidden rounded-2xl border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+          <img src="/ss-settings.png" alt="LazyDoc AI backend settings" className="w-full" />
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {[
+            { icon: <KeyRound className="h-4 w-4" />, t: "Hosted providers", b: "Plug in OpenAI or Anthropic for speed and convenience." },
+            { icon: <Cpu className="h-4 w-4" />, t: "Local models", b: "Route through Ollama when privacy or cost control matters more." },
+            { icon: <Shield className="h-4 w-4" />, t: "No hidden markup", b: "LazyDoc doesn't resell your tokens. Your spend goes to your provider." },
+            { icon: <Lock className="h-4 w-4" />, t: "Keys stored on-device", b: "Credentials stay encrypted on your machine — never sent to LazyDoc." },
+          ].map(({ icon, t, b }) => (
+            <div key={t} className="flex gap-3 rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+              <div className="mt-0.5 shrink-0 text-slate-400">{icon}</div>
+              <div><div className="text-sm font-medium text-slate-200">{t}</div><div className="mt-0.5 text-xs leading-5 text-slate-500">{b}</div></div>
+            </div>
+          ))}
+        </div>
+      </DocStep>
+
+      <DocStep id="f-custom" number="07" title="Customization">
+        <p className="text-lg leading-8 text-slate-400">
+          Multiple themes, a fully editable system prompt, menu bar mode, and configurable capture settings — LazyDoc adapts to how you work.
+        </p>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="overflow-hidden rounded-2xl border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+            <img src="/ThemeSeleection.png" alt="LazyDoc theme picker" className="w-full" />
           </div>
-          <div className="grid gap-5 sm:grid-cols-2">
-            <CompareToolCard icon={<Trophy className="h-5 w-5" />} name="LazyDoc" tag="Best fit" text="Best for developers, IT, and power users who need desktop capture, AI flexibility, and a one-time price instead of another SaaS bill." verdict="If your workflow leaves the browser, LazyDoc is the strongest fit." />
-            <CompareToolCard icon={<Globe className="h-5 w-5" />} name="Scribe" tag="Browser-first" text="Strong name recognition and polished onboarding, but it leans heavily toward browser workflows and subscription pricing." verdict="Good for simple browser walkthroughs. Less compelling for mixed desktop and technical workflows." />
-            <CompareToolCard icon={<BadgeCheck className="h-5 w-5" />} name="Tango" tag="Enterprise" text="A structured process documentation tool aimed at larger orgs, but it feels more corporate and less developer-native." verdict="Better for standardized business process capture than flexible technical documentation." />
-            <CompareToolCard icon={<CircleDollarSign className="h-5 w-5" />} name="Guidde" tag="Video-first" text="Leans into video walkthroughs and narrated visual guides more than technical, reusable documentation from real workflows." verdict="Useful for presentation-style walkthroughs, weaker for ops docs and BYOK control." />
+          <div className="overflow-hidden rounded-2xl border border-white/8 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+            <img src="/Prompt Editor.png" alt="LazyDoc system prompt editor" className="w-full" />
           </div>
         </div>
-      </section>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {[
+            { icon: <Sparkles className="h-4 w-4" />, t: "Multiple themes", b: "Obsidian, Terminal, Rose, Midnight, Paper — switch any time." },
+            { icon: <Terminal className="h-4 w-4" />, t: "System prompt editor", b: "Customize how the AI writes — tone, format, structure, all of it." },
+            { icon: <ScanText className="h-4 w-4" />, t: "Configurable frame settings", b: "Set the capture interval and max frame count to match your pace." },
+            { icon: <AppWindow className="h-4 w-4" />, t: "Menu bar mode", b: "Hides from the Dock and runs in the menu bar — out of your way." },
+          ].map(({ icon, t, b }) => (
+            <div key={t} className="flex gap-3 rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+              <div className="mt-0.5 shrink-0 text-slate-400">{icon}</div>
+              <div><div className="text-sm font-medium text-slate-200">{t}</div><div className="mt-0.5 text-xs leading-5 text-slate-500">{b}</div></div>
+            </div>
+          ))}
+        </div>
+      </DocStep>
 
-      <section id="table" className="pb-24">
-        <SectionTitle eyebrow="Comparison matrix" title="The differences are not subtle." body="Most tools in this category are optimized for browser capture, generic business users, or recurring SaaS revenue. LazyDoc is optimized for people doing real work on real machines." />
+      <DocStep id="f-pricing" number="08" title="Pricing">
+        <p className="text-lg leading-8 text-slate-400">
+          One price. Everything included. No seat limits, no subscription tiers, no usage dashboard hiding a bill.
+        </p>
+        <div className="grid gap-6 md:grid-cols-[1fr_1fr]">
+          <PricingCard />
+          <div className="grid content-start gap-3">
+            {[
+              { icon: <BadgeCheck className="h-4 w-4" />, t: "All features included", b: "Frame review, AI generation, editor, export, BYOK — nothing gated." },
+              { icon: <Shield className="h-4 w-4" />, t: "Up to 3 machine activations", b: "Transfer to a new machine by contacting help@lazydoc.app." },
+              { icon: <Lock className="h-4 w-4" />, t: "7-day offline grace period", b: "Works fully offline for 7 days before license re-validation." },
+              { icon: <Zap className="h-4 w-4" />, t: "Future updates included", b: "All updates delivered automatically through the built-in updater." },
+            ].map(({ icon, t, b }) => (
+              <div key={t} className="flex gap-3 rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+                <div className="mt-0.5 shrink-0 text-slate-400">{icon}</div>
+                <div><div className="text-sm font-medium text-slate-200">{t}</div><div className="mt-0.5 text-xs leading-5 text-slate-500">{b}</div></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </DocStep>
+
+    </DocPageShell>
+  );
+}
+
+function ComparePage({ setPage }) {
+  const [activeSection, setActiveSection] = useState("c-overview");
+  const tocItems = [
+    { num: "01", label: "Overview", href: "#c-overview", id: "c-overview" },
+    { num: "02", label: "vs Scribe", href: "#c-scribe", id: "c-scribe" },
+    { num: "03", label: "vs Tango", href: "#c-tango", id: "c-tango" },
+    { num: "04", label: "vs Guidde", href: "#c-guidde", id: "c-guidde" },
+    { num: "05", label: "Feature Matrix", href: "#c-matrix", id: "c-matrix" },
+    { num: "06", label: "Verdict", href: "#c-verdict", id: "c-verdict" },
+  ];
+
+  useEffect(() => {
+    const ids = tocItems.map(t => t.id);
+    const onScroll = () => {
+      let current = ids[0];
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= window.innerHeight * 0.35) current = id;
+      }
+      setActiveSection(current);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <DocPageShell setPage={setPage} title="How LazyDoc" titleAccent="stacks up." badge="6 sections" tocItems={tocItems} activeSection={activeSection}>
+
+      <DocStep id="c-overview" number="01" title="The landscape">
+        <p className="text-lg leading-8 text-slate-400">
+          There are a handful of tools trying to solve documentation from screen recordings. Most are browser-first, subscription-priced, and locked to their own AI backend. LazyDoc is different on all three counts.
+        </p>
+        <div className="grid gap-3 sm:grid-cols-3">
+          {[
+            { icon: <Monitor className="h-4 w-4" />, t: "Desktop-first capture", b: "Captures your full screen — not just what's in a browser tab." },
+            { icon: <KeyRound className="h-4 w-4" />, t: "Bring your own AI", b: "Your key, your provider, your cost. No token markup ever." },
+            { icon: <CircleDollarSign className="h-4 w-4" />, t: "One-time price", b: "$39.99 once. No monthly bill waiting to grow." },
+          ].map(({ icon, t, b }) => (
+            <div key={t} className="flex gap-3 rounded-2xl border border-white/8 bg-white/[0.03] p-4">
+              <div className="mt-0.5 shrink-0 text-slate-400">{icon}</div>
+              <div><div className="text-sm font-medium text-slate-200">{t}</div><div className="mt-0.5 text-xs leading-5 text-slate-500">{b}</div></div>
+            </div>
+          ))}
+        </div>
+        <DocCallout>
+          If your workflow ever leaves the browser — terminals, desktop apps, admin panels, local tools — LazyDoc is the only option that captures it fully.
+        </DocCallout>
+      </DocStep>
+
+      <DocStep id="c-scribe" number="02" title="LazyDoc vs Scribe">
+        <p className="text-lg leading-8 text-slate-400">
+          Scribe is the biggest name in step-by-step guide generation. It's polished, well-marketed, and works well for browser walkthroughs. But it's a browser extension first — and that's where it stops.
+        </p>
+        <div className="rounded-[28px] border border-white/10 bg-white/[0.03] overflow-hidden">
+          <ComparisonRow label="" lazydoc="LazyDoc" other="Scribe" header />
+          <ComparisonRow label="Capture scope" lazydoc="Full desktop + apps" other="Browser only" />
+          <ComparisonRow label="AI generation" lazydoc="Full structured guide" other="Step screenshots + labels" />
+          <ComparisonRow label="Bring your own AI" lazydoc="Yes" other="No" />
+          <ComparisonRow label="Pricing" lazydoc="$39.99 one-time" other="Subscription" />
+          <ComparisonRow label="Best for" lazydoc="Technical desktop workflows" other="Simple browser SOPs" />
+        </div>
+        <DocCallout variant="warning">
+          Scribe can't capture anything outside Chrome. If your workflow touches a terminal, a desktop app, or a local tool, Scribe can't document it.
+        </DocCallout>
+      </DocStep>
+
+      <DocStep id="c-tango" number="03" title="LazyDoc vs Tango">
+        <p className="text-lg leading-8 text-slate-400">
+          Tango is built for standardized business process documentation — think enterprise onboarding and process handoffs. It's corporate-friendly but not developer-native, and it doesn't go near your AI stack.
+        </p>
+        <div className="rounded-[28px] border border-white/10 bg-white/[0.03] overflow-hidden">
+          <ComparisonRow label="" lazydoc="LazyDoc" other="Tango" header />
+          <ComparisonRow label="Capture scope" lazydoc="Full desktop + apps" other="Mostly browser" />
+          <ComparisonRow label="AI generation" lazydoc="Full structured guide" other="Limited" />
+          <ComparisonRow label="Bring your own AI" lazydoc="Yes" other="No" />
+          <ComparisonRow label="Developer / IT fit" lazydoc="Strong" other="Medium" />
+          <ComparisonRow label="Pricing" lazydoc="$39.99 one-time" other="Subscription" />
+        </div>
+      </DocStep>
+
+      <DocStep id="c-guidde" number="04" title="LazyDoc vs Guidde">
+        <p className="text-lg leading-8 text-slate-400">
+          Guidde leans into narrated video walkthroughs and polished visual explainers. It's strong for presentation-style content — weaker for operational documentation, runbooks, and anything that needs to be in Markdown or a knowledge base.
+        </p>
+        <div className="rounded-[28px] border border-white/10 bg-white/[0.03] overflow-hidden">
+          <ComparisonRow label="" lazydoc="LazyDoc" other="Guidde" header />
+          <ComparisonRow label="Output format" lazydoc="Structured text guide" other="Video walkthrough" />
+          <ComparisonRow label="Markdown / PDF export" lazydoc="Yes" other="Limited" />
+          <ComparisonRow label="Bring your own AI" lazydoc="Yes" other="No" />
+          <ComparisonRow label="Ops / runbook fit" lazydoc="Strong" other="Weak" />
+          <ComparisonRow label="Pricing" lazydoc="$39.99 one-time" other="Subscription" />
+        </div>
+      </DocStep>
+
+      <DocStep id="c-matrix" number="05" title="Feature Matrix">
+        <p className="text-lg leading-8 text-slate-400">
+          The full side-by-side. Most tools in this category are optimized for browser capture, generic business users, or recurring SaaS revenue.
+        </p>
         <Card className="overflow-hidden border-[#24325F] bg-[#0C111B]">
           <MultiCompareRow label="Feature" lazydoc="LazyDoc" scribe="Scribe" tango="Tango" guidde="Guidde" header />
-          <MultiCompareRow label="AI-powered documentation" lazydoc="Full generation" scribe="Limited" tango="Limited" guidde="Yes" />
-          <MultiCompareRow label="Bring your own AI" lazydoc="Yes" scribe="No" tango="No" guidde="No" />
-          <MultiCompareRow label="Desktop and system capture" lazydoc="Yes" scribe="Mostly browser" tango="Mostly browser" guidde="Mixed" />
+          <MultiCompareRow label="AI-powered guide generation" lazydoc="Full" scribe="Limited" tango="Limited" guidde="Yes" />
+          <MultiCompareRow label="Bring your own AI" lazydoc="✓" scribe="✗" tango="✗" guidde="✗" />
+          <MultiCompareRow label="Full desktop capture" lazydoc="✓" scribe="Browser only" tango="Browser only" guidde="Mixed" />
+          <MultiCompareRow label="Markdown / PDF export" lazydoc="✓" scribe="Partial" tango="Partial" guidde="Limited" />
           <MultiCompareRow label="Developer / IT fit" lazydoc="Strong" scribe="Weak" tango="Medium" guidde="Weak" />
-          <MultiCompareRow label="One-time purchase" lazydoc="Yes" scribe="No" tango="No" guidde="No" />
-          <MultiCompareRow label="Control over token costs" lazydoc="You control it" scribe="No" tango="No" guidde="No" />
-          <MultiCompareRow label="Best at" lazydoc="Technical workflows" scribe="Simple browser SOPs" tango="Process adoption" guidde="Video-style explainers" />
+          <MultiCompareRow label="One-time price" lazydoc="✓" scribe="✗" tango="✗" guidde="✗" />
+          <MultiCompareRow label="Token cost control" lazydoc="Full" scribe="None" tango="None" guidde="None" />
         </Card>
-      </section>
+      </DocStep>
 
-      <section className="pb-24">
-        <SectionTitle eyebrow="Top 3 alternatives" title="Who you are actually competing with." body="These are the three most relevant tools to beat on clarity, positioning, and workflow fit." />
-        <div className="grid gap-5 md:grid-cols-3">
-          <FeatureCard icon={<Globe className="h-5 w-5" />} title="Scribe" text="The biggest name in step-by-step guide generation. Strong browser experience, weaker fit for desktop-heavy technical workflows." />
-          <FeatureCard icon={<BadgeCheck className="h-5 w-5" />} title="Tango" text="Enterprise-oriented process documentation. Better for corporate process capture than dev-first documentation from live workflows." />
-          <FeatureCard icon={<Play className="h-5 w-5" />} title="Guidde" text="More presentation and video oriented. Stronger for polished walkthroughs than for operational docs, runbooks, and BYOK usage." />
-        </div>
-      </section>
-
-      <section id="verdict" className="pb-24">
-        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-          <Card className="rounded-[32px] border-[#2B3B6C] bg-gradient-to-br from-[#101726] to-[#0A0D15]">
-            <div className="p-8 md:p-10">
-              <div className="mb-4 text-xs uppercase tracking-[0.32em] text-slate-500">Verdict</div>
-              <h3 className="mb-4 text-3xl font-semibold tracking-tight text-white md:text-4xl">LazyDoc wins when the work is technical, mixed, or outside the browser.</h3>
-              <p className="max-w-2xl text-lg leading-8 text-slate-400">Scribe is the closest brand competitor, Tango is the process-heavy enterprise option, and Guidde is the presentation-style alternative. None of them combine desktop workflow capture, BYOK flexibility, and one-time pricing the way LazyDoc does.</p>
-              <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-4 text-slate-200">Best for developers, IT, ops, and internal tooling teams</div>
-                <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-4 text-slate-200">Best for teams that care about model choice and cost control</div>
-              </div>
+      <DocStep id="c-verdict" number="06" title="Verdict">
+        <p className="text-lg leading-8 text-slate-400">
+          Scribe is the closest brand competitor. Tango is the process-heavy enterprise option. Guidde is the video-first alternative. None of them combine desktop workflow capture, BYOK flexibility, and a one-time price.
+        </p>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {[
+            { t: "If your workflow leaves the browser", b: "LazyDoc is the only option that captures it." },
+            { t: "If you care about AI cost control", b: "BYOK means your spend goes to your provider, not a platform." },
+            { t: "If you're tired of SaaS subscriptions", b: "One purchase. No monthly renewal. Updates included." },
+            { t: "If you need ops-ready output", b: "Markdown, PDF, DOCX — not just a video or a screenshot list." },
+          ].map(({ t, b }) => (
+            <div key={t} className="rounded-2xl border border-white/8 bg-white/[0.03] p-5">
+              <div className="text-sm font-semibold text-slate-200">{t}</div>
+              <div className="mt-1.5 text-sm leading-6 text-slate-500">{b}</div>
             </div>
-          </Card>
+          ))}
+        </div>
+        <div className="grid gap-6 md:grid-cols-[1fr_1fr] items-start">
           <PricingCard />
-        </div>
-      </section>
-
-      <section className="pb-10">
-        <div className="rounded-[36px] border border-[#2B3B6C] bg-gradient-to-r from-[#101726] via-[#0D1220] to-[#101428] p-8 md:p-12">
-          <div className="grid items-center gap-8 md:grid-cols-[1fr_auto]">
-            <div>
-              <div className="mb-4 text-xs uppercase tracking-[0.32em] text-slate-500">Final CTA</div>
-              <h2 className="text-4xl font-semibold tracking-tight text-white md:text-5xl">Skip the browser-first compromise.</h2>
-              <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-400">Use the tool built for actual workflows, not just polished demos.</p>
-            </div>
-            <div className="flex flex-col gap-3 sm:flex-row md:flex-col">
-              <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx" className="px-6 py-4">Get LazyDoc — $39.99</PrimaryButton>
-              <SecondaryButton onClick={() => setPage("home")} className="px-6 py-4">Back to home</SecondaryButton>
+          <div className="rounded-[28px] border border-[#2B3B6C] bg-gradient-to-br from-[#101726] to-[#0A0D15] p-8">
+            <div className="mb-3 text-xs uppercase tracking-[0.32em] text-slate-500">Bottom line</div>
+            <p className="text-lg leading-8 text-slate-300">LazyDoc wins when the work is technical, mixed, or outside the browser. If that sounds like your workflow, it's the right tool.</p>
+            <div className="mt-6">
+              <PrimaryButton href="https://megabytesnyc.gumroad.com/l/xoenx" className="w-full justify-center py-4">
+                Get LazyDoc — $39.99
+              </PrimaryButton>
             </div>
           </div>
         </div>
-      </section>
-    </>
+      </DocStep>
+
+    </DocPageShell>
   );
 }
 
