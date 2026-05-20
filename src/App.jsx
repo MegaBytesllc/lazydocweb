@@ -255,11 +255,11 @@ const FAQ_ITEMS = [
   },
   {
     q: "How many machines can I install LazyDoc on?",
-    a: "Your one-time license supports up to 3 machine activations. If you need to transfer to a new machine, contact support.",
+    a: "Your one-time license supports up to 3 machine activations. If you need to transfer to a new machine, email help@lazydoc.app.",
   },
   {
     q: "Is there a refund policy?",
-    a: "Yes. If LazyDoc doesn't work for you, email support within 30 days of purchase and we'll make it right.",
+    a: "Yes. If LazyDoc doesn't work for you, email help@lazydoc.app within 30 days of purchase and we'll make it right.",
   },
   {
     q: "Will I get future updates?",
